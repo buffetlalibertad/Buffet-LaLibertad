@@ -11,7 +11,6 @@
         body { background: #000000; font-family: 'Inter', sans-serif; font-weight: 400; color: #e5e5e5; padding: 0; letter-spacing: -0.2px; }
         .app-container { max-width: 600px; margin: 0 auto; padding: 24px 20px 130px 20px; }
         
-        /* Header con logo al lado del nombre */
         .hero { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 32px; padding-top: 8px; flex-wrap: wrap; }
         .logo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; background: #1a1a1a; border: 1px solid #333; }
         .hero-text { text-align: center; }
@@ -21,7 +20,7 @@
         .buffet-description { background: #0c0c0c; border-radius: 28px; padding: 22px 24px; margin: 16px 0 28px; font-size: 0.85rem; line-height: 1.5; color: #b0b0b0; text-align: center; font-weight: 400; border: 0.5px solid #222; }
         .buffet-description strong { color: #ffffff; font-weight: 600; }
         .search-box { background: #0c0c0c; border-radius: 50px; padding: 12px 20px; display: flex; align-items: center; gap: 12px; margin-bottom: 28px; border: 0.5px solid #2a2a2a; transition: all 0.2s ease; }
-        .search-box:focus-within { border-color: #ffffff; background: #111; }
+        .search-box:focus-within { border-color: #d46b2e; background: #111; }
         .search-box i { color: #8a8a8a; font-size: 0.9rem; }
         #searchInput { background: transparent; border: none; flex: 1; padding: 4px 0; color: #ffffff; font-family: 'Inter', sans-serif; font-weight: 400; font-size: 0.9rem; outline: none; }
         #searchInput::placeholder { color: #5a5a5a; font-weight: 400; }
@@ -29,7 +28,7 @@
         .clear-search.visible { display: block; }
         .nav-sections { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 16px; margin-bottom: 8px; scrollbar-width: thin; }
         .section-btn { background: transparent; border: 0.5px solid #2a2a2a; padding: 10px 24px; border-radius: 40px; font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.8rem; color: #b0b0b0; cursor: pointer; white-space: nowrap; transition: all 0.2s ease; }
-        .section-btn:active { background: #ffffff; color: #000000; border-color: #ffffff; }
+        .section-btn:active { background: #d46b2e; color: #000000; border-color: #d46b2e; }
         .category-block { margin-bottom: 48px; scroll-margin-top: 20px; }
         .category-title { font-weight: 600; font-size: 1.3rem; letter-spacing: -0.4px; margin-bottom: 20px; color: #ffffff; }
         .dishes-grid { display: flex; flex-direction: column; gap: 16px; }
@@ -43,16 +42,15 @@
         .btn-add { background: #1a1a1a; border: 0.5px solid #333; padding: 8px 16px; border-radius: 40px; font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.7rem; color: #ffffff; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; transition: all 0.2s; margin-top: 8px; width: auto; }
         .btn-add:active { background: #2a2a2a; transform: scale(0.96); }
         .btn-add i { color: #ffffff; opacity: 0.7; font-size: 0.7rem; }
-        .btn-customize-salad { background: #ffffff; color: #000000; border: none; }
-        .btn-customize-salad:active { background: #e0e0e0; }
+        .btn-customize-salad { background: #d46b2e; color: #000000; border: none; }
+        .btn-customize-salad:active { background: #e07a3a; }
         .btn-customize-salad i { color: #000000; opacity: 0.8; }
         .no-results-message { text-align: center; padding: 40px 0; color: #666; font-weight: 400; font-size: 0.85rem; }
         
-        /* Carrito flotante */
-        .cart-floating { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(8,8,8,0.98); border-top: 0.5px solid #2a2a2a; box-shadow: 0 -10px 30px rgba(0,0,0,0.8); padding: 16px 20px 24px; z-index: 1000; backdrop-filter: blur(20px); }
+        .cart-floating { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(8,8,8,0.98); border-top: 0.5px solid #d46b2e; box-shadow: 0 -10px 30px rgba(0,0,0,0.8); padding: 16px 20px 24px; z-index: 1000; backdrop-filter: blur(20px); }
         .cart-summary { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
         .cart-summary h3 { font-weight: 500; font-size: 1rem; display: flex; gap: 8px; align-items: center; color: #ffffff; }
-        .cart-total-preview { font-weight: 700; font-size: 1.3rem; color: #ffffff; }
+        .cart-total-preview { font-weight: 700; font-size: 1.3rem; color: #d46b2e; }
         .cart-actions-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
         .btn-clear-quick { background: #1a1a1a; border: 0.5px solid #333; padding: 6px 14px; border-radius: 40px; font-size: 0.7rem; font-weight: 500; color: #aaa; display: flex; align-items: center; gap: 6px; cursor: pointer; }
         .cart-preview-items { font-size: 0.65rem; font-weight: 400; color: #888; margin-bottom: 14px; white-space: nowrap; overflow-x: auto; display: flex; gap: 8px; padding-bottom: 4px; }
@@ -60,8 +58,8 @@
         .cart-actions { display: flex; gap: 12px; }
         .btn-view-cart, .btn-checkout { flex: 1; padding: 12px 0; border-radius: 40px; font-weight: 500; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: all 0.2s; }
         .btn-view-cart { background: #1a1a1a; border: 0.5px solid #333; color: #ffffff; }
-        .btn-checkout { background: #ffffff; border: none; color: #000000; font-weight: 600; }
-        .btn-checkout:active { transform: scale(0.97); background: #e0e0e0; }
+        .btn-checkout { background: #d46b2e; border: none; color: #000000; font-weight: 600; }
+        .btn-checkout:active { transform: scale(0.97); background: #e07a3a; }
         
         .modal-custom, .modal-cart { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); backdrop-filter: blur(16px); z-index: 2000; display: flex; align-items: center; justify-content: center; visibility: hidden; opacity: 0; transition: 0.25s ease; }
         .modal-custom.active, .modal-cart.active { visibility: visible; opacity: 1; }
@@ -72,19 +70,20 @@
         .close-modal:hover { color: #ffffff; }
         
         .option-group { margin-bottom: 24px; }
-        .option-label { font-weight: 500; color: #ffffff; margin-bottom: 12px; display: block; font-size: 0.9rem; }
+        .option-label { font-weight: 500; color: #d46b2e; margin-bottom: 12px; display: block; font-size: 0.9rem; }
         .radio-group { display: flex; gap: 20px; flex-wrap: wrap; }
         .radio-group label { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 400; color: #d0d0d0; }
-        .radio-group input[type="radio"] { accent-color: #ffffff; width: 16px; height: 16px; }
-        .price-preview { text-align: right; font-weight: 600; font-size: 1.1rem; color: #ffffff; margin: 16px 0 20px; padding-top: 12px; border-top: 0.5px solid #2a2a2a; }
-        .btn-confirm { background: #ffffff; width: 100%; border: none; padding: 14px; border-radius: 40px; font-weight: 600; font-size: 0.9rem; color: #000000; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.15s; }
-        .btn-confirm:active { transform: scale(0.98); background: #e0e0e0; }
+        .radio-group input[type="radio"] { accent-color: #d46b2e; width: 16px; height: 16px; }
+        .price-preview { text-align: right; font-weight: 600; font-size: 1.1rem; color: #d46b2e; margin: 16px 0 20px; padding-top: 12px; border-top: 0.5px solid #2a2a2a; }
+        .btn-confirm { background: #d46b2e; width: 100%; border: none; padding: 14px; border-radius: 40px; font-weight: 600; font-size: 0.9rem; color: #000000; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.15s; }
+        .btn-confirm:active { transform: scale(0.98); background: #e07a3a; }
         
         .ingredients-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; max-height: 220px; overflow-y: auto; padding: 4px; }
-        .ingredient-chip { background: #1a1a1a; border: 0.5px solid #333; border-radius: 40px; padding: 8px 16px; font-size: 0.75rem; font-weight: 400; cursor: pointer; color: #d0d0d0; }
-        .ingredient-chip.selected { background: #ffffff; color: #000000; border-color: #ffffff; font-weight: 500; }
+        .ingredient-chip { background: #1a1a1a; border: 0.5px solid #333; border-radius: 40px; padding: 8px 16px; font-size: 0.75rem; font-weight: 400; cursor: pointer; color: #d0d0d0; transition: all 0.15s; }
+        .ingredient-chip.selected { background: #d46b2e; color: #000000; border-color: #d46b2e; font-weight: 500; }
         .counter-info { font-size: 0.7rem; color: #888; text-align: right; margin-bottom: 10px; }
         .protein-select { background: #1a1a1a; border: 0.5px solid #333; border-radius: 40px; padding: 12px 16px; width: 100%; color: #ffffff; font-size: 0.85rem; margin-bottom: 16px; outline: none; }
+        .protein-select:focus { border-color: #d46b2e; }
         
         .cart-items-list { max-height: 35vh; overflow-y: auto; margin-bottom: 18px; }
         .cart-item-modal { display: flex; justify-content: space-between; background: #1a1a1a; border-radius: 20px; padding: 12px 14px; margin-bottom: 8px; align-items: center; }
@@ -93,15 +92,15 @@
         .item-actions-modal { display: flex; gap: 10px; align-items: center; }
         .qty-btn-modal { background: #2a2a2a; border: none; width: 30px; height: 30px; border-radius: 30px; font-weight: 500; font-size: 1.1rem; color: white; cursor: pointer; }
         .remove-item-modal { background: none; border: none; color: #ff6b6b; font-size: 1rem; cursor: pointer; }
-        .total-modal { text-align: right; font-weight: 600; font-size: 1.2rem; border-top: 0.5px solid #2a2a2a; padding-top: 14px; margin: 8px 0; color: #ffffff; }
+        .total-modal { text-align: right; font-weight: 600; font-size: 1.2rem; border-top: 0.5px solid #2a2a2a; padding-top: 14px; margin: 8px 0; color: #d46b2e; }
         .order-form-modal input, .order-form-modal textarea, .order-type-select { width: 100%; background: #1a1a1a; border: 0.5px solid #333; border-radius: 20px; padding: 12px 14px; margin-bottom: 10px; color: #ffffff; font-size: 0.8rem; outline: none; font-family: 'Inter', sans-serif; }
         .order-type-select { cursor: pointer; }
-        .order-form-modal input:focus, .order-form-modal textarea:focus, .order-type-select:focus { border-color: #ffffff; background: #222; }
+        .order-form-modal input:focus, .order-form-modal textarea:focus, .order-type-select:focus { border-color: #d46b2e; background: #222; }
         .notes-field { margin-top: 5px; margin-bottom: 15px; }
         .notes-field textarea { width: 100%; background: #1a1a1a; border: 0.5px solid #333; border-radius: 20px; padding: 12px 14px; color: #ffffff; font-size: 0.8rem; outline: none; resize: vertical; min-height: 70px; }
-        .notes-field textarea:focus { border-color: #ffffff; background: #222; }
-        .btn-send-wa { background: #ffffff; width: 100%; border: none; padding: 14px; border-radius: 40px; font-weight: 600; font-size: 0.9rem; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; color: #000000; }
-        .btn-send-wa:active { transform: scale(0.98); background: #e0e0e0; }
+        .notes-field textarea:focus { border-color: #d46b2e; background: #222; }
+        .btn-send-wa { background: #d46b2e; width: 100%; border: none; padding: 14px; border-radius: 40px; font-weight: 600; font-size: 0.9rem; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; color: #000000; }
+        .btn-send-wa:active { transform: scale(0.98); background: #e07a3a; }
         .empty-cart-modal { text-align: center; padding: 32px 0; color: #666; font-size: 0.85rem; }
         
         .carousel-section { margin: 48px 0 28px; }
@@ -114,7 +113,7 @@
         .carousel-btn.prev { left: 12px; } .carousel-btn.next { right: 12px; }
         .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
         .dot { width: 6px; height: 6px; border-radius: 50%; background: #444; cursor: pointer; }
-        .dot.active { background: #ffffff; width: 20px; border-radius: 4px; }
+        .dot.active { background: #d46b2e; width: 20px; border-radius: 4px; }
         
         .info-local { background: #0c0c0c; border-radius: 28px; padding: 24px; margin-bottom: 20px; border: 0.5px solid #2a2a2a; }
         .info-item { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; font-size: 0.85rem; }
@@ -151,6 +150,7 @@
         <button class="section-btn" data-section="clasicos">Platillos</button>
         <button class="section-btn" data-section="desayunos">Desayunos</button>
         <button class="section-btn" data-section="pastas">Pastas</button>
+        <button class="section-btn" data-section="tacos">Tacos</button>
         <button class="section-btn" data-section="ensaladas">Ensaladas</button>
         <button class="section-btn" data-section="otros">Acompañamientos</button>
         <button class="section-btn" data-section="bebidas">Bebidas</button>
@@ -159,6 +159,7 @@
     <div id="seccionClasicos" class="category-block"><div class="category-title">Nuestros Clásicos</div><div class="dishes-grid" id="gridClasicos"></div></div>
     <div id="seccionDesayunos" class="category-block"><div class="category-title">Desayunos</div><div class="dishes-grid" id="gridDesayunos"></div></div>
     <div id="seccionPastas" class="category-block"><div class="category-title">Pastas</div><div class="dishes-grid" id="gridPastas"></div></div>
+    <div id="seccionTacos" class="category-block"><div class="category-title">Tacos</div><div class="dishes-grid" id="gridTacos"></div></div>
     <div id="seccionEnsaladas" class="category-block"><div class="category-title">Ensalada Personalizada</div><div class="dishes-grid" id="gridEnsaladas"></div></div>
     <div id="seccionOtros" class="category-block"><div class="category-title">Acompañamientos</div><div class="dishes-grid" id="gridOtros"></div></div>
     <div id="seccionBebidas" class="category-block"><div class="category-title">Bebidas</div><div class="dishes-grid" id="gridBebidas"></div></div>
@@ -292,9 +293,12 @@
         else clearBtn.classList.remove('visible'); 
     }
     
-    function scrollToSection(sectionId){ const names={clasicos:"seccionClasicos",desayunos:"seccionDesayunos",pastas:"seccionPastas",ensaladas:"seccionEnsaladas",otros:"seccionOtros",bebidas:"seccionBebidas"}; const el=document.getElementById(names[sectionId]); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }
+    function scrollToSection(sectionId){ 
+        const names={clasicos:"seccionClasicos",desayunos:"seccionDesayunos",pastas:"seccionPastas",tacos:"seccionTacos",ensaladas:"seccionEnsaladas",otros:"seccionOtros",bebidas:"seccionBebidas"}; 
+        const el=document.getElementById(names[sectionId]); 
+        if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); 
+    }
 
-    // Modal con opción de papas extra
     function openWithPapasOption(baseItem, customConfig = null) {
         let hasExtra = false;
         const modalContent = document.getElementById("customizeModalContent");
@@ -366,6 +370,73 @@
         });
     }
 
+    function openBrochetasModal(baseItem) {
+        let selectedProteina = "camaron";
+        let proteinMap = { camaron: "Camarón", arrachera: "Arrachera", pollo: "Pollo" };
+        let proteinPrices = { camaron: 89, arrachera: 89, pollo: 89 };
+        openWithPapasOption(baseItem, {
+            html: `<div class="option-group"><label class="option-label">Elige tu proteína</label><div class="radio-group"><label><input type="radio" name="proteina" value="camaron" checked> Camarón ($89)</label><label><input type="radio" name="proteina" value="arrachera"> Arrachera ($89)</label><label><input type="radio" name="proteina" value="pollo"> Pollo ($89)</label></div></div>`,
+            getCustomization: () => ({ name: `Brochetas de ${proteinMap[selectedProteina]}`, price: proteinPrices[selectedProteina] }),
+            init: () => { 
+                document.querySelectorAll('input[name="proteina"]').forEach(r => r.onchange = () => { selectedProteina = r.value; });
+            }
+        });
+    }
+
+    function openHuevosModal(baseItem) {
+        let selectedEstilo = "estrellados";
+        let estiloMap = { estrellados: "Estrellados", revueltos: "Revueltos", mexicanos: "A la Mexicana", con_jamon: "Con Jamón", rancheros: "Rancheros" };
+        openWithPapasOption(baseItem, {
+            html: `<div class="option-group"><label class="option-label">Elige tu estilo</label><div class="radio-group"><label><input type="radio" name="estilo" value="estrellados" checked> Estrellados</label><label><input type="radio" name="estilo" value="revueltos"> Revueltos</label><label><input type="radio" name="estilo" value="mexicanos"> A la Mexicana</label><label><input type="radio" name="estilo" value="con_jamon"> Con Jamón</label><label><input type="radio" name="estilo" value="rancheros"> Rancheros</label></div></div>`,
+            getCustomization: () => ({ name: `Huevos ${estiloMap[selectedEstilo]}`, price: 55 }),
+            init: () => { 
+                document.querySelectorAll('input[name="estilo"]').forEach(r => r.onchange = () => { selectedEstilo = r.value; });
+            }
+        });
+    }
+
+    function openBarrasModal(baseItem) {
+        let selectedBarra = "frijoles";
+        let barraMap = { 
+            frijoles: "Frijoles con Chorizo", 
+            pizza: "Pizza", 
+            salchichas: "Salchichas en Salsa de Chipotle", 
+            quesos: "Quesos, Ajo y Especias" 
+        };
+        openWithPapasOption(baseItem, {
+            html: `<div class="option-group"><label class="option-label">Elige tu barra</label><div class="radio-group"><label><input type="radio" name="barra" value="frijoles" checked> Frijoles con Chorizo</label><label><input type="radio" name="barra" value="pizza"> Pizza</label><label><input type="radio" name="barra" value="salchichas"> Salchichas en Salsa de Chipotle</label><label><input type="radio" name="barra" value="quesos"> Quesos, Ajo y Especias</label></div></div>`,
+            getCustomization: () => ({ name: `Barra de ${barraMap[selectedBarra]}`, price: 49 }),
+            init: () => { 
+                document.querySelectorAll('input[name="barra"]').forEach(r => r.onchange = () => { selectedBarra = r.value; });
+            }
+        });
+    }
+
+    function openTacosModal(baseItem) {
+        let selectedTaco = "arrachera";
+        let tacoMap = { 
+            arrachera: "Arrachera", 
+            bistec: "Bistec", 
+            pastor: "Pastor", 
+            chorizo: "Chorizo", 
+            campechano: "Campechano" 
+        };
+        let tacoPrices = { 
+            arrachera: 20, 
+            bistec: 15, 
+            pastor: 13, 
+            chorizo: 13, 
+            campechano: 15 
+        };
+        openWithPapasOption(baseItem, {
+            html: `<div class="option-group"><label class="option-label">Elige tu taco</label><div class="radio-group"><label><input type="radio" name="taco" value="arrachera" checked> Arrachera ($20)</label><label><input type="radio" name="taco" value="bistec"> Bistec ($15)</label><label><input type="radio" name="taco" value="pastor"> Pastor ($13)</label><label><input type="radio" name="taco" value="chorizo"> Chorizo ($13)</label><label><input type="radio" name="taco" value="campechano"> Campechano ($15)</label></div></div>`,
+            getCustomization: () => ({ name: `Taco de ${tacoMap[selectedTaco]}`, price: tacoPrices[selectedTaco] }),
+            init: () => { 
+                document.querySelectorAll('input[name="taco"]').forEach(r => r.onchange = () => { selectedTaco = r.value; });
+            }
+        });
+    }
+
     function openExtraPapasModal(baseItem) { openWithPapasOption(baseItem); }
 
     function openEnsaladaModal() { 
@@ -385,21 +456,34 @@
     }
 
     const menuItems = [
+        // Clásicos existentes
         { id:"milanesa_pollo", nombre:"Milanesa de Pollo", precio:90, desc:"Crujiente, pasta y vegetales al vapor", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGUoz38VVQ7qxu1veIYz7m9AhCr7o8d0HMcg&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
         { id:"fajitas_res", nombre:"Fajitas de Res", precio:159, desc:"Con guacamole, frijoles, salsa y totopos", img:"https://jetextramar.com/wp-content/uploads/2021/07/empresa-de-alimentos-receta-de-guacamole.jpg", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
         { id:"papas_alhorno", nombre:"Papas al Horno", precio:79, desc:"Gratinadas con queso, con tortillas", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQggF8LfUl7U0eUUBnWe225Ilx0A-XISUFSJQ&s", categoria:"clasicos", custom:(item)=>openPapasRellenoModal(item) },
         { id:"pollo_oriental", nombre:"Pollo Tipo Oriental", precio:119, desc:"Con vegetales y pan con ajo", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgcDfLUdzL9XLazMpjU_ilAC6WcOvp96SJjA&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
+        { id:"filete_pescado", nombre:"Filete de Pescado Empapelado con Camarón", precio:95, desc:"Pescado en papillote con camarones, verduras y especias", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUtmcNcgxHKt-omWj5nY83cSGAQW7E_CWbuw&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
+        { id:"ceviche_habanero", nombre:"Ceviche de Camarón en Salsa de Habanero", precio:110, desc:"Ceviche fresco con tostadas, salsa de habanero al gusto", img:"https://pinaenlacocina.com/wp-content/uploads/2014/01/IMG_20180422_165323.jpg", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
+        { id:"brochetas", nombre:"Brochetas (4 piezas)", precio:89, desc:"4 brochetas con arroz blanco. Elige tu proteína", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX-Y-5XzmS9zSr3foKO-5gH-6Ik1XYenJI8Q&s", categoria:"clasicos", custom:(item)=>openBrochetasModal(item) },
         { id:"coctel_camaron", nombre:"Coctel de Camarón", precio:120, desc:"Camarones frescos con salsa cocktail", img:"https://pinaenlacocina.com/wp-content/uploads/2014/01/IMG_20180422_165323.jpg", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
         { id:"parrill_ada", nombre:"Parrillada", precio:189, desc:"Tocineta, chuleta, camarones y chorizo", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX-Y-5XzmS9zSr3foKO-5gH-6Ik1XYenJI8Q&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
         { id:"pechuga_pollo", nombre:"Pechuga a la Plancha", precio:110, desc:"Con arroz y vegetales al vapor", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF_z6BbHCC8XIJa7gK7tN_QfiGCWXFcKflSQ&s", categoria:"clasicos", custom:(item)=>openBBQModal(item) },
+        // Desayunos
         { id:"chilaquiles_verdes", nombre:"Chilaquiles Verdes", precio:85, desc:"Con frijoles y ensalada", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqJK74Z_PL6ZjUNbBF3U4GDbDjyPgJ_q7TlQ&s", categoria:"desayunos" },
         { id:"chilaquiles_rojos", nombre:"Chilaquiles Rojos", precio:85, desc:"Con frijoles y ensalada", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ9we6bC6xfbHkBYhMjdd5GZPZnfDDRFW_NQ&s", categoria:"desayunos" },
         { id:"burrito", nombre:"Burrito", precio:79, desc:"Acompañado de salsa", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRE09R7Pr2T6jP-VM6dNrqpKPdGlsUqWl4gA&s", categoria:"desayunos", custom:(item)=>openBurritoModal(item) },
+        { id:"huevos_gusto", nombre:"Huevos al Gusto", precio:55, desc:"Elige tu estilo: estrellados, revueltos, a la mexicana, con jamón o rancheros", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5XN3JJB8lJKrTDkLJEpiLd1IL_FlE0xEKSQ&s", categoria:"desayunos", custom:(item)=>openHuevosModal(item) },
+        { id:"barras", nombre:"Barra", precio:49, desc:"Elige entre: Frijoles con Chorizo, Pizza, Salchichas en Chipotle o Quesos con Ajo", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6OC1t4Lb_fN47scE0TQHZYMI1-nU6vPcDmQ&s", categoria:"desayunos", custom:(item)=>openBarrasModal(item) },
         { id:"menudo", nombre:"Menudo (Por Litro)", precio:1000, desc:"Solo domingos, con tortillas", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXOT-6-I-mP9Vtvo7YrX_ZHuWE3uF2Gyu6mw&s", categoria:"desayunos" },
         { id:"hot_cakes", nombre:"Hot Cakes con Fruta", precio:65, desc:"3 hot cakes con fruta", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVShdhlDtLaiIMkd20FXTV8TIfnuSxJwqkSw&s", categoria:"desayunos" },
+        // Pastas
         { id:"pasta_italiana", nombre:"Pasta Italiana", precio:95, desc:"Con pollo, tomate, espinaca y parmesano", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUQObwSU8zGs5lCcheGLubYY5tqG_W-YMGGQ&s", categoria:"pastas" },
+        { id:"pasta_camarones_chipotle", nombre:"Pasta con Camarones en Crema de Chipotle", precio:109, desc:"Pasta con camarones, crema de chipotle y queso parmesano, acompañada con pan de ajo", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS73CQGupD7kKhlfSi_Pgim4SmeFE1eUCTt3g&s", categoria:"pastas" },
+        // Tacos (unificado)
+        { id:"tacos", nombre:"Taco", precio:13, desc:"Elige tu tipo: Arrachera, Bistec, Pastor, Chorizo o Campechano", img:"https://cdn.nutritionstudies.org/wp-content/uploads/2023/03/chipotle-mushroom-tacos-1024x683.jpg", categoria:"tacos", custom:(item)=>openTacosModal(item) },
+        // Acompañamientos
         { id:"papas_fritas", nombre:"Papas Fritas", precio:50, desc:"Crujientes papas a la francesa", img:"https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=300&h=200&fit=crop", categoria:"otros" },
         { id:"papas_pollo", nombre:"Papas con Pollo", precio:85, desc:"Papas con trocitos de pollo empanizado", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8HYQMILNcZ-b0rx4q7N0-bU-YU978YY4l-g&s", categoria:"otros" },
+        // Bebidas
         { id:"cocacola", nombre:"Coca-Cola", precio:35, desc:"Lata 355 ml bien fría", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGTf9aUTctNTXvv5A3yXuhJ-JWA6DnrhJvew&s", categoria:"bebidas" },
         { id:"sprite", nombre:"Sprite", precio:32, desc:"Lata 355 ml, sabor cítrico", img:"https://calimaxmx.vtexassets.com/arquivos/ids/203614-800-450?v=638065795193000000&width=800&height=450&aspect=true", categoria:"bebidas" },
         { id:"fanta", nombre:"Fanta Naranja", precio:32, desc:"Lata 355 ml, refrescante", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-L2ud8xKYZiCqsrGoU8CU6uWjZlxfR0k-5w&s", categoria:"bebidas" },
@@ -407,7 +491,7 @@
     ];
 
     function renderFullMenu(){
-        const grids={clasicos:document.getElementById("gridClasicos"),desayunos:document.getElementById("gridDesayunos"),pastas:document.getElementById("gridPastas"),ensaladas:document.getElementById("gridEnsaladas"),otros:document.getElementById("gridOtros"),bebidas:document.getElementById("gridBebidas")};
+        const grids={clasicos:document.getElementById("gridClasicos"),desayunos:document.getElementById("gridDesayunos"),pastas:document.getElementById("gridPastas"),tacos:document.getElementById("gridTacos"),ensaladas:document.getElementById("gridEnsaladas"),otros:document.getElementById("gridOtros"),bebidas:document.getElementById("gridBebidas")};
         Object.values(grids).forEach(g=>{if(g)g.innerHTML="";});
         menuItems.forEach(item=>{
             const card=document.createElement("div"); card.className="dish-card";
@@ -418,6 +502,7 @@
             if(item.categoria==="clasicos") grids.clasicos.appendChild(card);
             else if(item.categoria==="desayunos") grids.desayunos.appendChild(card);
             else if(item.categoria==="pastas") grids.pastas.appendChild(card);
+            else if(item.categoria==="tacos") grids.tacos.appendChild(card);
             else if(item.categoria==="otros") grids.otros.appendChild(card);
             else if(item.categoria==="bebidas") grids.bebidas.appendChild(card);
         });
@@ -445,7 +530,6 @@
     document.getElementById("floatingCheckoutBtn").addEventListener("click",()=>{ modalOpen=true; renderModalCart(); modal.classList.add("active"); });
     window.addEventListener("click",(e)=>{ if(e.target===modal){ modal.classList.remove("active"); modalOpen=false; } });
     
-    // Mostrar/ocultar campo de dirección según tipo de pedido
     document.getElementById("modalTipoPedido").addEventListener("change", function() {
         const domicilioField = document.getElementById("modalDomicilio");
         if(this.value === "domicilio") {
