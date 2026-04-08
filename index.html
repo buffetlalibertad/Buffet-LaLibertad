@@ -124,7 +124,11 @@
         .horarios { margin-top: 15px; padding-top: 15px; border-top: 0.5px solid #2a2a2a; }
         .horarios p { margin: 6px 0; font-size: 0.8rem; font-weight: 400; color: #c0c0c0; }
         .horarios strong { color: #ffffff; font-weight: 600; }
-        footer { margin-top: 20px; text-align: center; font-size: 0.55rem; color: #555; font-weight: 400; }
+        
+        /* Footer créditos */
+        .credits-footer { margin-top: 30px; padding: 20px 0 10px; text-align: center; border-top: 0.5px solid #2a2a2a; font-size: 0.7rem; color: #666; }
+        .credits-footer p { margin: 5px 0; }
+        .credits-footer .heart { color: #d46b2e; }
     </style>
 </head>
 <body>
@@ -177,14 +181,19 @@
     <div class="info-local">
         <div class="info-item"><i class="fas fa-map-marker-alt"></i><span><a href="https://maps.app.goo.gl/2ai25HgLsVScqoRY8" target="_blank">Ver ubicación en Google Maps</a></span></div>
         <div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1000!2d-100.123456!3d20.654321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjDCsDM5JzE1LjYiTiAxMDDCsDA3JzI0LjQiVw!5e0!3m2!1ses!2smx!4v1700000000000!5m2!1ses!2smx" allowfullscreen="" loading="lazy"></iframe></div>
-        <div class="info-item"><i class="fas fa-phone-alt"></i><span><a href="tel:+524131012498">413 162 14 38</a></span></div>
+        <div class="info-item"><i class="fas fa-phone-alt"></i><span><a href="tel:+524131621438">413 162 14 38</a></span></div>
         <div class="horarios">
             <p><strong>Horarios</strong></p>
             <p>Lunes, Martes, Jueves, Viernes, Sábado, Domingo: 9:30 AM - 5:00 PM</p>
             <p style="color:#ff6b6b;">Miércoles: Cerrado</p>
         </div>
     </div>
-    <footer>También te esperamos en nuestro buffet local</footer>
+    
+    <div class="credits-footer">
+        <p>Diseño y desarrollo por <strong>Brandon Juárez Vega</strong></p>
+        <p>© 2025 Buffet La Libertad - Todos los derechos reservados</p>
+        <p><span class="heart">❤️</span> Hecho con pasión para Apaseo El Alto <span class="heart">❤️</span></p>
+    </div>
 </div>
 
 <div class="cart-floating"><div class="cart-summary"><h3><i class="fas fa-shopping-bag"></i> Mi pedido</h3><div class="cart-total-preview" id="floatingTotal">$0</div></div>
@@ -373,10 +382,9 @@
     function openBrochetasModal(baseItem) {
         let selectedProteina = "camaron";
         let proteinMap = { camaron: "Camarón", arrachera: "Arrachera", pollo: "Pollo" };
-        let proteinPrices = { camaron: 89, arrachera: 89, pollo: 89 };
         openWithPapasOption(baseItem, {
             html: `<div class="option-group"><label class="option-label">Elige tu proteína</label><div class="radio-group"><label><input type="radio" name="proteina" value="camaron" checked> Camarón ($89)</label><label><input type="radio" name="proteina" value="arrachera"> Arrachera ($89)</label><label><input type="radio" name="proteina" value="pollo"> Pollo ($89)</label></div></div>`,
-            getCustomization: () => ({ name: `Brochetas de ${proteinMap[selectedProteina]}`, price: proteinPrices[selectedProteina] }),
+            getCustomization: () => ({ name: `Brochetas de ${proteinMap[selectedProteina]}`, price: 89 }),
             init: () => { 
                 document.querySelectorAll('input[name="proteina"]').forEach(r => r.onchange = () => { selectedProteina = r.value; });
             }
@@ -388,7 +396,7 @@
         let estiloMap = { estrellados: "Estrellados", revueltos: "Revueltos", mexicanos: "A la Mexicana", con_jamon: "Con Jamón", rancheros: "Rancheros" };
         openWithPapasOption(baseItem, {
             html: `<div class="option-group"><label class="option-label">Elige tu estilo</label><div class="radio-group"><label><input type="radio" name="estilo" value="estrellados" checked> Estrellados</label><label><input type="radio" name="estilo" value="revueltos"> Revueltos</label><label><input type="radio" name="estilo" value="mexicanos"> A la Mexicana</label><label><input type="radio" name="estilo" value="con_jamon"> Con Jamón</label><label><input type="radio" name="estilo" value="rancheros"> Rancheros</label></div></div>`,
-            getCustomization: () => ({ name: `Huevos ${estiloMap[selectedEstilo]}`, price: 55 }),
+            getCustomization: () => ({ name: `Huevos ${estiloMap[selectedEstilo]}`, price: 65 }),
             init: () => { 
                 document.querySelectorAll('input[name="estilo"]').forEach(r => r.onchange = () => { selectedEstilo = r.value; });
             }
@@ -413,7 +421,7 @@
     }
 
     function openTacosModal(baseItem) {
-        let selectedTaco = "arrachera";
+        let selectedTaco = "bistec";
         let tacoMap = { 
             arrachera: "Arrachera", 
             bistec: "Bistec", 
@@ -423,16 +431,42 @@
         };
         let tacoPrices = { 
             arrachera: 20, 
-            bistec: 15, 
-            pastor: 13, 
-            chorizo: 13, 
-            campechano: 15 
+            bistec: 14, 
+            pastor: 14, 
+            chorizo: 14, 
+            campechano: 14 
         };
         openWithPapasOption(baseItem, {
-            html: `<div class="option-group"><label class="option-label">Elige tu taco</label><div class="radio-group"><label><input type="radio" name="taco" value="arrachera" checked> Arrachera ($20)</label><label><input type="radio" name="taco" value="bistec"> Bistec ($15)</label><label><input type="radio" name="taco" value="pastor"> Pastor ($13)</label><label><input type="radio" name="taco" value="chorizo"> Chorizo ($13)</label><label><input type="radio" name="taco" value="campechano"> Campechano ($15)</label></div></div>`,
+            html: `<div class="option-group"><label class="option-label">Elige tu taco</label><div class="radio-group"><label><input type="radio" name="taco" value="arrachera"> Arrachera ($20)</label><label><input type="radio" name="taco" value="bistec" checked> Bistec ($14)</label><label><input type="radio" name="taco" value="pastor"> Pastor ($14)</label><label><input type="radio" name="taco" value="chorizo"> Chorizo ($14)</label><label><input type="radio" name="taco" value="campechano"> Campechano ($14)</label></div></div>`,
             getCustomization: () => ({ name: `Taco de ${tacoMap[selectedTaco]}`, price: tacoPrices[selectedTaco] }),
             init: () => { 
                 document.querySelectorAll('input[name="taco"]').forEach(r => r.onchange = () => { selectedTaco = r.value; });
+            }
+        });
+    }
+
+    function openCevicheModal(baseItem) {
+        let selectedSize = "chico";
+        let sizeMap = { chico: "Chico (1/2 Litro)", grande: "Grande (1 Litro)" };
+        let sizePrices = { chico: 130, grande: 160 };
+        openWithPapasOption(baseItem, {
+            html: `<div class="option-group"><label class="option-label">Elige el tamaño</label><div class="radio-group"><label><input type="radio" name="size" value="chico" checked> Chico (1/2 Litro) - $130</label><label><input type="radio" name="size" value="grande"> Grande (1 Litro) - $160</label></div></div>`,
+            getCustomization: () => ({ name: `Ceviche de Camarón en Salsa de Habanero ${sizeMap[selectedSize]}`, price: sizePrices[selectedSize] }),
+            init: () => { 
+                document.querySelectorAll('input[name="size"]').forEach(r => r.onchange = () => { selectedSize = r.value; });
+            }
+        });
+    }
+
+    function openCoctelModal(baseItem) {
+        let selectedSize = "chico";
+        let sizeMap = { chico: "Chico", grande: "Grande" };
+        let sizePrices = { chico: 130, grande: 160 };
+        openWithPapasOption(baseItem, {
+            html: `<div class="option-group"><label class="option-label">Elige el tamaño</label><div class="radio-group"><label><input type="radio" name="size" value="chico" checked> Chico - $130 (con galletas saladas)</label><label><input type="radio" name="size" value="grande"> Grande - $160 (con galletas saladas)</label></div></div>`,
+            getCustomization: () => ({ name: `Coctel de Camarón ${sizeMap[selectedSize]} con Galletas Saladas`, price: sizePrices[selectedSize] }),
+            init: () => { 
+                document.querySelectorAll('input[name="size"]').forEach(r => r.onchange = () => { selectedSize = r.value; });
             }
         });
     }
@@ -461,25 +495,25 @@
         { id:"fajitas_res", nombre:"Fajitas de Res", precio:159, desc:"Con guacamole, frijoles, salsa y totopos", img:"https://jetextramar.com/wp-content/uploads/2021/07/empresa-de-alimentos-receta-de-guacamole.jpg", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
         { id:"papas_alhorno", nombre:"Papas al Horno", precio:79, desc:"Gratinadas con queso, con tortillas", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQggF8LfUl7U0eUUBnWe225Ilx0A-XISUFSJQ&s", categoria:"clasicos", custom:(item)=>openPapasRellenoModal(item) },
         { id:"pollo_oriental", nombre:"Pollo Tipo Oriental", precio:119, desc:"Con vegetales y pan con ajo", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgcDfLUdzL9XLazMpjU_ilAC6WcOvp96SJjA&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
-        { id:"filete_pescado", nombre:"Filete de Pescado Empapelado con Camarón", precio:95, desc:"Pescado en papillote con camarones, gratinado con queso, morrón, cebolla y jalapeño, acompañado con arroz blanco y pan de ajo. ", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUtmcNcgxHKt-omWj5nY83cSGAQW7E_CWbuw&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
-        { id:"ceviche_habanero", nombre:"Ceviche de Camarón en Salsa de Habanero", precio:110, desc:"Ceviche fresco con tostadas, salsa de habanero al gusto", img:"https://pinaenlacocina.com/wp-content/uploads/2014/01/IMG_20180422_165323.jpg", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
-        { id:"brochetas", nombre:"Brochetas (4 piezas)", precio:89, desc:"3 brochetas con arroz blanco. Elige tu proteína", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX-Y-5XzmS9zSr3foKO-5gH-6Ik1XYenJI8Q&s", categoria:"clasicos", custom:(item)=>openBrochetasModal(item) },
-        { id:"coctel_camaron", nombre:"Coctel de Camarón", precio:120, desc:"Camarones frescos con salsa cocktail", img:"https://pinaenlacocina.com/wp-content/uploads/2014/01/IMG_20180422_165323.jpg", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
+        { id:"filete_pescado", nombre:"Filete de Pescado Empapelado con Camarón", precio:115, desc:"Pescado en papillote con camarones, gratinado con queso, morrón, cebolla y jalapeño, acompañado con arroz blanco y pan de ajo.", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUtmcNcgxHKt-omWj5nY83cSGAQW7E_CWbuw&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
+        { id:"ceviche_habanero", nombre:"Ceviche de Camarón en Salsa de Habanero", precio:130, desc:"Ceviche fresco con tostadas, salsa de habanero al gusto", img:"https://pinaenlacocina.com/wp-content/uploads/2014/01/IMG_20180422_165323.jpg", categoria:"clasicos", custom:(item)=>openCevicheModal(item) },
+        { id:"brochetas", nombre:"Brochetas (3 piezas)", precio:89, desc:"3 brochetas con arroz blanco. Elige tu proteína", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX-Y-5XzmS9zSr3foKO-5gH-6Ik1XYenJI8Q&s", categoria:"clasicos", custom:(item)=>openBrochetasModal(item) },
+        { id:"coctel_camaron", nombre:"Coctel de Camarón", precio:130, desc:"Camarones frescos con salsa cocktail, acompañado de galletas saladas", img:"https://pinaenlacocina.com/wp-content/uploads/2014/01/IMG_20180422_165323.jpg", categoria:"clasicos", custom:(item)=>openCoctelModal(item) },
         { id:"parrill_ada", nombre:"Parrillada", precio:189, desc:"Tocineta, chuleta, camarones y chorizo", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX-Y-5XzmS9zSr3foKO-5gH-6Ik1XYenJI8Q&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
         { id:"pechuga_pollo", nombre:"Pechuga a la Plancha", precio:110, desc:"Con arroz y vegetales al vapor", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF_z6BbHCC8XIJa7gK7tN_QfiGCWXFcKflSQ&s", categoria:"clasicos", custom:(item)=>openBBQModal(item) },
         // Desayunos
         { id:"chilaquiles_verdes", nombre:"Chilaquiles Verdes", precio:85, desc:"Con frijoles y ensalada", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqJK74Z_PL6ZjUNbBF3U4GDbDjyPgJ_q7TlQ&s", categoria:"desayunos" },
         { id:"chilaquiles_rojos", nombre:"Chilaquiles Rojos", precio:85, desc:"Con frijoles y ensalada", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ9we6bC6xfbHkBYhMjdd5GZPZnfDDRFW_NQ&s", categoria:"desayunos" },
         { id:"burrito", nombre:"Burrito", precio:79, desc:"Acompañado de salsa", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRE09R7Pr2T6jP-VM6dNrqpKPdGlsUqWl4gA&s", categoria:"desayunos", custom:(item)=>openBurritoModal(item) },
-        { id:"huevos_gusto", nombre:"Huevos al Gusto", precio:55, desc:"Elige tu estilo, acompañados con frijoles en chipotle, una rebanada de queso panela, salsa y tortillas.", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5XN3JJB8lJKrTDkLJEpiLd1IL_FlE0xEKSQ&s", categoria:"desayunos", custom:(item)=>openHuevosModal(item) },
-        { id:"barras", nombre:"Barra", precio:49, desc:"2 barras, elige tu estilo. img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6OC1t4Lb_fN47scE0TQHZYMI1-nU6vPcDmQ&s", categoria:"desayunos", custom:(item)=>openBarrasModal(item) },
+        { id:"huevos_gusto", nombre:"Huevos al Gusto", precio:65, desc:"Elige tu estilo, acompañados con frijoles en chipotle, una rebanada de queso panela, salsa y tortillas.", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5XN3JJB8lJKrTDkLJEpiLd1IL_FlE0xEKSQ&s", categoria:"desayunos", custom:(item)=>openHuevosModal(item) },
+        { id:"barras", nombre:"Barra (2 piezas)", precio:49, desc:"2 barras, elige tu estilo.", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6OC1t4Lb_fN47scE0TQHZYMI1-nU6vPcDmQ&s", categoria:"desayunos", custom:(item)=>openBarrasModal(item) },
         { id:"menudo", nombre:"Menudo (Por Litro)", precio:1000, desc:"Solo domingos, con tortillas", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXOT-6-I-mP9Vtvo7YrX_ZHuWE3uF2Gyu6mw&s", categoria:"desayunos" },
         { id:"hot_cakes", nombre:"Hot Cakes con Fruta", precio:65, desc:"3 hot cakes con fruta", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVShdhlDtLaiIMkd20FXTV8TIfnuSxJwqkSw&s", categoria:"desayunos" },
         // Pastas
         { id:"pasta_italiana", nombre:"Pasta Italiana", precio:95, desc:"Con pollo, tomate, espinaca y parmesano", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUQObwSU8zGs5lCcheGLubYY5tqG_W-YMGGQ&s", categoria:"pastas" },
-        { id:"pasta_camarones_chipotle", nombre:"Pasta con Camarones en Crema de Chipotle", precio:109, desc:"Pasta con camarones, crema de chipotle y queso parmesano, acompañada con pan de ajo", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS73CQGupD7kKhlfSi_Pgim4SmeFE1eUCTt3g&s", categoria:"pastas" },
+        { id:"pasta_camarones_chipotle", nombre:"Pasta con Camarones en Crema de Chipotle", precio:119, desc:"Pasta con camarones, crema de chipotle y queso parmesano, acompañada con pan de ajo", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS73CQGupD7kKhlfSi_Pgim4SmeFE1eUCTt3g&s", categoria:"pastas" },
         // Tacos (unificado)
-        { id:"tacos", nombre:"Taco", precio:13, desc:"Elige tu tipo: Arrachera, Bistec, Pastor, Chorizo o Campechano", img:"https://cdn.nutritionstudies.org/wp-content/uploads/2023/03/chipotle-mushroom-tacos-1024x683.jpg", categoria:"tacos", custom:(item)=>openTacosModal(item) },
+        { id:"tacos", nombre:"Taco", precio:14, desc:"Elige tu tipo: Arrachera ($20), Bistec ($14), Pastor ($14), Chorizo ($14) o Campechano ($14)", img:"https://cdn.nutritionstudies.org/wp-content/uploads/2023/03/chipotle-mushroom-tacos-1024x683.jpg", categoria:"tacos", custom:(item)=>openTacosModal(item) },
         // Acompañamientos
         { id:"papas_fritas", nombre:"Papas Fritas", precio:50, desc:"Crujientes papas a la francesa", img:"https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=300&h=200&fit=crop", categoria:"otros" },
         { id:"papas_pollo", nombre:"Papas con Pollo", precio:85, desc:"Papas con trocitos de pollo empanizado", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8HYQMILNcZ-b0rx4q7N0-bU-YU978YY4l-g&s", categoria:"otros" },
