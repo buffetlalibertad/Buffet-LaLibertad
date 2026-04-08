@@ -78,6 +78,15 @@
         .btn-confirm { background: #d46b2e; width: 100%; border: none; padding: 14px; border-radius: 40px; font-weight: 600; font-size: 0.9rem; color: #000000; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.15s; }
         .btn-confirm:active { transform: scale(0.98); background: #e07a3a; }
         
+        /* Estilos para selector de cantidad de tacos */
+        .taco-quantity { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding: 8px 0; border-bottom: 0.5px solid #2a2a2a; }
+        .taco-name { font-weight: 500; color: #ffffff; width: 100px; }
+        .taco-price { color: #d46b2e; width: 60px; font-size: 0.8rem; }
+        .taco-controls { display: flex; align-items: center; gap: 12px; }
+        .taco-controls button { background: #1a1a1a; border: 0.5px solid #333; width: 28px; height: 28px; border-radius: 30px; font-weight: 500; font-size: 1rem; color: white; cursor: pointer; }
+        .taco-controls span { min-width: 30px; text-align: center; font-weight: 500; }
+        .taco-summary { margin-top: 15px; padding-top: 12px; border-top: 0.5px solid #2a2a2a; text-align: right; font-weight: 600; color: #d46b2e; }
+        
         .ingredients-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; max-height: 220px; overflow-y: auto; padding: 4px; }
         .ingredient-chip { background: #1a1a1a; border: 0.5px solid #333; border-radius: 40px; padding: 8px 16px; font-size: 0.75rem; font-weight: 400; cursor: pointer; color: #d0d0d0; transition: all 0.15s; }
         .ingredient-chip.selected { background: #d46b2e; color: #000000; border-color: #d46b2e; font-weight: 500; }
@@ -125,7 +134,6 @@
         .horarios p { margin: 6px 0; font-size: 0.8rem; font-weight: 400; color: #c0c0c0; }
         .horarios strong { color: #ffffff; font-weight: 600; }
         
-        /* Footer créditos */
         .credits-footer { margin-top: 30px; padding: 20px 0 10px; text-align: center; border-top: 0.5px solid #2a2a2a; font-size: 0.7rem; color: #666; }
         .credits-footer p { margin: 5px 0; }
         .credits-footer .heart { color: #d46b2e; }
@@ -420,29 +428,92 @@
         });
     }
 
+    // TACOS MODAL CON MÚLTIPLES CANTIDADES Y MEZCLA DE CARNES
     function openTacosModal(baseItem) {
-        let selectedTaco = "bistec";
-        let tacoMap = { 
-            arrachera: "Arrachera", 
-            bistec: "Bistec", 
-            pastor: "Pastor", 
-            chorizo: "Chorizo", 
-            campechano: "Campechano" 
+        let quantities = {
+            arrachera: 0,
+            bistec: 0,
+            pastor: 0,
+            chorizo: 0,
+            campechano: 0
         };
-        let tacoPrices = { 
-            arrachera: 20, 
-            bistec: 14, 
-            pastor: 14, 
-            chorizo: 14, 
-            campechano: 14 
+        
+        let prices = {
+            arrachera: 20,
+            bistec: 14,
+            pastor: 14,
+            chorizo: 14,
+            campechano: 14
         };
-        openWithPapasOption(baseItem, {
-            html: `<div class="option-group"><label class="option-label">Elige tu taco</label><div class="radio-group"><label><input type="radio" name="taco" value="arrachera"> Arrachera ($20)</label><label><input type="radio" name="taco" value="bistec" checked> Bistec ($14)</label><label><input type="radio" name="taco" value="pastor"> Pastor ($14)</label><label><input type="radio" name="taco" value="chorizo"> Chorizo ($14)</label><label><input type="radio" name="taco" value="campechano"> Campechano ($14)</label></div></div>`,
-            getCustomization: () => ({ name: `Taco de ${tacoMap[selectedTaco]}`, price: tacoPrices[selectedTaco] }),
-            init: () => { 
-                document.querySelectorAll('input[name="taco"]').forEach(r => r.onchange = () => { selectedTaco = r.value; });
+        
+        function updateTotal() {
+            let total = 0;
+            let details = [];
+            for (let [key, value] of Object.entries(quantities)) {
+                if (value > 0) {
+                    total += value * prices[key];
+                    details.push(`${value} de ${key === 'arrachera' ? 'Arrachera' : key === 'bistec' ? 'Bistec' : key === 'pastor' ? 'Pastor' : key === 'chorizo' ? 'Chorizo' : 'Campechano'}`);
+                }
             }
+            document.getElementById("tacoTotalPrice").innerText = `Total: $${total}`;
+            return { total, details };
+        }
+        
+        function updateQuantity(type, delta) {
+            let newVal = quantities[type] + delta;
+            if (newVal >= 0 && newVal <= 50) {
+                quantities[type] = newVal;
+                document.getElementById(`qty_${type}`).innerText = quantities[type];
+                updateTotal();
+            }
+        }
+        
+        const modalContent = document.getElementById("customizeModalContent");
+        modalContent.innerHTML = `
+            <div class="modal-header"><h2>Pedir Tacos</h2><button class="close-modal" id="closeCustomModal">&times;</button></div>
+            <div class="option-group"><label class="option-label">Cantidad de cada tipo de taco</label>
+                <div class="taco-quantity"><span class="taco-name">🌮 Arrachera</span><span class="taco-price">$${prices.arrachera} c/u</span><div class="taco-controls"><button class="taco-minus" data-type="arrachera">-</button><span id="qty_arrachera">0</span><button class="taco-plus" data-type="arrachera">+</button></div></div>
+                <div class="taco-quantity"><span class="taco-name">🌮 Bistec</span><span class="taco-price">$${prices.bistec} c/u</span><div class="taco-controls"><button class="taco-minus" data-type="bistec">-</button><span id="qty_bistec">0</span><button class="taco-plus" data-type="bistec">+</button></div></div>
+                <div class="taco-quantity"><span class="taco-name">🌮 Pastor</span><span class="taco-price">$${prices.pastor} c/u</span><div class="taco-controls"><button class="taco-minus" data-type="pastor">-</button><span id="qty_pastor">0</span><button class="taco-plus" data-type="pastor">+</button></div></div>
+                <div class="taco-quantity"><span class="taco-name">🌮 Chorizo</span><span class="taco-price">$${prices.chorizo} c/u</span><div class="taco-controls"><button class="taco-minus" data-type="chorizo">-</button><span id="qty_chorizo">0</span><button class="taco-plus" data-type="chorizo">+</button></div></div>
+                <div class="taco-quantity"><span class="taco-name">🌮 Campechano</span><span class="taco-price">$${prices.campechano} c/u</span><div class="taco-controls"><button class="taco-minus" data-type="campechano">-</button><span id="qty_campechano">0</span><button class="taco-plus" data-type="campechano">+</button></div></div>
+            </div>
+            <div class="taco-summary" id="tacoTotalPrice">Total: $0</div>
+            <button class="btn-confirm" id="confirmTacosBtn"><i class="fas fa-check"></i> Agregar al carrito</button>
+        `;
+        
+        document.getElementById("customizeModal").classList.add("active");
+        document.getElementById("closeCustomModal").onclick = () => document.getElementById("customizeModal").classList.remove("active");
+        
+        document.querySelectorAll('.taco-minus').forEach(btn => {
+            btn.onclick = () => updateQuantity(btn.dataset.type, -1);
         });
+        document.querySelectorAll('.taco-plus').forEach(btn => {
+            btn.onclick = () => updateQuantity(btn.dataset.type, 1);
+        });
+        
+        document.getElementById("confirmTacosBtn").onclick = () => {
+            let total = 0;
+            let tacoList = [];
+            for (let [key, value] of Object.entries(quantities)) {
+                if (value > 0) {
+                    total += value * prices[key];
+                    let name = key === 'arrachera' ? 'Arrachera' : key === 'bistec' ? 'Bistec' : key === 'pastor' ? 'Pastor' : key === 'chorizo' ? 'Chorizo' : 'Campechano';
+                    tacoList.push(`${value} taco(s) de ${name}`);
+                }
+            }
+            if (tacoList.length === 0) {
+                alert("Selecciona al menos un taco");
+                return;
+            }
+            addToCartCustom({ 
+                id: "tacos_" + Date.now(), 
+                nombre: `Tacos: ${tacoList.join(", ")}`, 
+                precio: total, 
+                cantidad: 1 
+            });
+            document.getElementById("customizeModal").classList.remove("active");
+        };
     }
 
     function openCevicheModal(baseItem) {
@@ -512,8 +583,8 @@
         // Pastas
         { id:"pasta_italiana", nombre:"Pasta Italiana", precio:95, desc:"Con pollo, tomate, espinaca y parmesano", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUQObwSU8zGs5lCcheGLubYY5tqG_W-YMGGQ&s", categoria:"pastas" },
         { id:"pasta_camarones_chipotle", nombre:"Pasta con Camarones en Crema de Chipotle", precio:119, desc:"Pasta con camarones, crema de chipotle y queso parmesano, acompañada con pan de ajo", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS73CQGupD7kKhlfSi_Pgim4SmeFE1eUCTt3g&s", categoria:"pastas" },
-        // Tacos (unificado)
-        { id:"tacos", nombre:"Taco", precio:14, desc:"Elige tu tipo: Arrachera ($20), Bistec ($14), Pastor ($14), Chorizo ($14) o Campechano ($14)", img:"https://cdn.nutritionstudies.org/wp-content/uploads/2023/03/chipotle-mushroom-tacos-1024x683.jpg", categoria:"tacos", custom:(item)=>openTacosModal(item) },
+        // Tacos (unificado con múltiples cantidades)
+        { id:"tacos", nombre:"Tacos", precio:0, desc:"Elige cuántos tacos de cada tipo quieres (Arrachera $20, Bistec/Pastor/Chorizo/Campechano $14)", img:"https://cdn.nutritionstudies.org/wp-content/uploads/2023/03/chipotle-mushroom-tacos-1024x683.jpg", categoria:"tacos", custom:(item)=>openTacosModal(item) },
         // Acompañamientos
         { id:"papas_fritas", nombre:"Papas Fritas", precio:50, desc:"Crujientes papas a la francesa", img:"https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=300&h=200&fit=crop", categoria:"otros" },
         { id:"papas_pollo", nombre:"Papas con Pollo", precio:85, desc:"Papas con trocitos de pollo empanizado", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8HYQMILNcZ-b0rx4q7N0-bU-YU978YY4l-g&s", categoria:"otros" },
@@ -529,7 +600,8 @@
         Object.values(grids).forEach(g=>{if(g)g.innerHTML="";});
         menuItems.forEach(item=>{
             const card=document.createElement("div"); card.className="dish-card";
-            card.innerHTML=`<img class="dish-img" src="${item.img}" alt="${item.nombre}" loading="lazy" onerror="this.src='https://placehold.co/200x200/2c2c2c/white?text=Comida'"><div class="dish-info"><div class="dish-name">${item.nombre}</div><div class="dish-price">$${item.precio}</div><div class="dish-desc">${item.desc}</div><button class="btn-add" data-id="${item.id}"><i class="fas fa-cart-plus"></i> Agregar</button></div>`;
+            const displayPrice = item.precio > 0 ? `$${item.precio}` : "Precio variable";
+            card.innerHTML=`<img class="dish-img" src="${item.img}" alt="${item.nombre}" loading="lazy" onerror="this.src='https://placehold.co/200x200/2c2c2c/white?text=Comida'"><div class="dish-info"><div class="dish-name">${item.nombre}</div><div class="dish-price">${displayPrice}</div><div class="dish-desc">${item.desc}</div><button class="btn-add" data-id="${item.id}"><i class="fas fa-cart-plus"></i> Agregar</button></div>`;
             const btn=card.querySelector(".btn-add");
             if(item.custom) btn.onclick=()=>item.custom(item);
             else btn.onclick=()=>addToCartCustom({ id:item.id+"_"+Date.now(), nombre:item.nombre, precio:item.precio, cantidad:1 });
