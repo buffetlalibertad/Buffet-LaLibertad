@@ -9,7 +9,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #000000; font-family: 'Inter', sans-serif; font-weight: 400; color: #e5e5e5; padding: 0; letter-spacing: -0.2px; }
-        .app-container { max-width: 600px; margin: 0 auto; padding: 24px 20px 130px 20px; }
+        .app-container { max-width: 600px; margin: 0 auto; padding: 24px 20px 180px 20px; }
         
         .hero { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 32px; padding-top: 8px; flex-wrap: wrap; }
         .logo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; background: #1a1a1a; border: 1px solid #333; }
@@ -78,7 +78,6 @@
         .btn-confirm { background: #d46b2e; width: 100%; border: none; padding: 14px; border-radius: 40px; font-weight: 600; font-size: 0.9rem; color: #000000; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.15s; }
         .btn-confirm:active { transform: scale(0.98); background: #e07a3a; }
         
-        /* Estilos para selector de cantidad de tacos */
         .taco-quantity { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding: 8px 0; border-bottom: 0.5px solid #2a2a2a; }
         .taco-name { font-weight: 500; color: #ffffff; width: 100px; }
         .taco-price { color: #d46b2e; width: 60px; font-size: 0.8rem; }
@@ -134,9 +133,10 @@
         .horarios p { margin: 6px 0; font-size: 0.8rem; font-weight: 400; color: #c0c0c0; }
         .horarios strong { color: #ffffff; font-weight: 600; }
         
-        .credits-footer { margin-top: 30px; padding: 20px 0 10px; text-align: center; border-top: 0.5px solid #2a2a2a; font-size: 0.7rem; color: #666; }
+        .credits-footer { margin-top: 30px; padding: 20px 0 10px; text-align: center; border-top: 0.5px solid #2a2a2a; font-size: 0.7rem; color: #888; }
         .credits-footer p { margin: 5px 0; }
         .credits-footer .heart { color: #d46b2e; }
+        .credits-footer strong { color: #ffffff; font-weight: 500; }
     </style>
 </head>
 <body>
@@ -452,7 +452,8 @@
             for (let [key, value] of Object.entries(quantities)) {
                 if (value > 0) {
                     total += value * prices[key];
-                    details.push(`${value} de ${key === 'arrachera' ? 'Arrachera' : key === 'bistec' ? 'Bistec' : key === 'pastor' ? 'Pastor' : key === 'chorizo' ? 'Chorizo' : 'Campechano'}`);
+                    let name = key === 'arrachera' ? 'Arrachera' : key === 'bistec' ? 'Bistec' : key === 'pastor' ? 'Pastor' : key === 'chorizo' ? 'Chorizo' : 'Campechano';
+                    details.push(`${value} de ${name}`);
                 }
             }
             document.getElementById("tacoTotalPrice").innerText = `Total: $${total}`;
