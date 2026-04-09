@@ -275,9 +275,9 @@
         cart.forEach((item,index)=>{ const subt=item.precio*item.cantidad; total+=subt; detalleItems+=`${index+1}• ${item.cantidad} x ${item.nombre} → $${item.precio} c/u = $${subt}\n`; }); 
         
         let direccionTexto = tipoPedido === "domicilio" ? `Dirección: ${domicilio}\nReferencia: ${referencia || "Sin especificar"}` : "Recoger en local (sin envío)";
-        let notasTexto = notas ? `\n\n📝 NOTAS:\n${notas}` : "";
+        let notasTexto = notas ? `\n\n NOTAS:\n${notas}` : "";
         
-        const mensaje = `🍽️ *BUFFET LA LIBERTAD - NUEVO PEDIDO* 🍽️\n\n━━━━━━━━━━━━━━━━━━━━\n👤 DATOS DEL CLIENTE\n━━━━━━━━━━━━━━━━━━━━\nNombre: ${nombre}\nTeléfono: ${telefono}\nTipo de pedido: ${tipoPedido === "domicilio" ? "Envío a domicilio" : "Recoger en local"}\n${direccionTexto}\n\n━━━━━━━━━━━━━━━━━━━━\n🍳 DETALLE DEL PEDIDO\n━━━━━━━━━━━━━━━━━━━━\n${detalleItems}\n━━━━━━━━━━━━━━━━━━━━\n💰 TOTAL A PAGAR: $${total} MXN${notasTexto}`; 
+        const mensaje = ` *BUFFET LA LIBERTAD - NUEVO PEDIDO* \n\n━━━━━━━━━━━━━━━━━━━━\n DATOS DEL CLIENTE\n━━━━━━━━━━━━━━━━━━━━\nNombre: ${nombre}\nTeléfono: ${telefono}\nTipo de pedido: ${tipoPedido === "domicilio" ? "Envío a domicilio" : "Recoger en local"}\n${direccionTexto}\n\n━━━━━━━━━━━━━━━━━━━━\nDETALLE DEL PEDIDO\n━━━━━━━━━━━━━━━━━━━━\n${detalleItems}\n━━━━━━━━━━━━━━━━━━━━\n TOTAL A PAGAR: $${total} MXN${notasTexto}`; 
         return encodeURIComponent(mensaje); 
     }
     
