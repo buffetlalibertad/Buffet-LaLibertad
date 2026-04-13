@@ -365,8 +365,8 @@
         let selectedProteina = "camaron";
         let proteinMap = { camaron: "Camarón", arrachera: "Arrachera", pollo: "Pollo" };
         openWithPapasOption(baseItem, {
-            html: `<div class="option-group"><label class="option-label">Elige tu proteína</label><div class="radio-group"><label><input type="radio" name="proteina" value="camaron" checked> Camarón ($89)</label><label><input type="radio" name="proteina" value="arrachera"> Arrachera ($89)</label><label><input type="radio" name="proteina" value="pollo"> Pollo ($89)</label></div></div>`,
-            getCustomization: () => ({ name: `Brochetas de ${proteinMap[selectedProteina]}`, price: 89 }),
+            html: `<div class="option-group"><label class="option-label">Elige tu proteína</label><div class="radio-group"><label><input type="radio" name="proteina" value="camaron" checked> Camarón ($99)</label><label><input type="radio" name="proteina" value="arrachera"> Arrachera ($99)</label><label><input type="radio" name="proteina" value="pollo"> Pollo ($99)</label></div></div>`,
+            getCustomization: () => ({ name: `Brochetas de ${proteinMap[selectedProteina]}`, price: 99 }),
             init: () => { document.querySelectorAll('input[name="proteina"]').forEach(r => r.onchange = () => { selectedProteina = r.value; }); }
         });
     }
@@ -391,7 +391,44 @@
         });
     }
 
-    // TACOS MODAL - Sin taco de pastor, sin verduras marcadas por defecto
+    // Chilaquiles con proteína - PRECIOS CORREGIDOS
+    function openChilaquilesModal(baseItem, esVerde) {
+        let selectedProteina = "ninguna";
+        let proteinaMap = { arrachera: "Arrachera +$30", pollo_empanizado: "Pollo empanizado +$15", pollo_plancha: "Pollo a la plancha +$15" };
+        let proteinaPrecio = { arrachera: 30, pollo_empanizado: 15, pollo_plancha: 15 };
+        let nombreBase = esVerde ? "Chilaquiles Verdes" : "Chilaquiles Rojos";
+        
+        openWithPapasOption(baseItem, {
+            html: `<div class="option-group"><label class="option-label">Elige tu proteína (opcional)</label><div class="radio-group"><label><input type="radio" name="proteina" value="ninguna" checked> Sin proteína</label><label><input type="radio" name="proteina" value="arrachera"> Arrachera (+$30)</label><label><input type="radio" name="proteina" value="pollo_empanizado"> Pollo empanizado (+$15)</label><label><input type="radio" name="proteina" value="pollo_plancha"> Pollo a la plancha (+$15)</label></div></div>`,
+            getCustomization: () => {
+                let precioFinal = 85;
+                let nombreFinal = nombreBase;
+                if (selectedProteina !== "ninguna") {
+                    precioFinal += proteinaPrecio[selectedProteina];
+                    let proteinaNombre = proteinaMap[selectedProteina];
+                    nombreFinal = `${nombreBase} con ${proteinaNombre}`;
+                }
+                return { name: nombreFinal, price: precioFinal };
+            },
+            init: () => { 
+                document.querySelectorAll('input[name="proteina"]').forEach(r => r.onchange = () => { selectedProteina = r.value; });
+            }
+        });
+    }
+
+    // Hamburguesas con proteína
+    function openHamburguesaModal(baseItem) {
+        let selectedProteina = "res";
+        let proteinaMap = { res: "Res", milanesa: "Milanesa de Pollo", pollo_plancha: "Pollo a la plancha" };
+        openWithPapasOption(baseItem, {
+            html: `<div class="option-group"><label class="option-label">Elige tu proteína</label><div class="radio-group"><label><input type="radio" name="proteina" value="res" checked> Res</label><label><input type="radio" name="proteina" value="milanesa"> Milanesa de Pollo</label><label><input type="radio" name="proteina" value="pollo_plancha"> Pollo a la plancha</label></div></div>`,
+            getCustomization: () => ({ name: `Hamburguesa de ${proteinaMap[selectedProteina]}`, price: 89 }),
+            init: () => { 
+                document.querySelectorAll('input[name="proteina"]').forEach(r => r.onchange = () => { selectedProteina = r.value; });
+            }
+        });
+    }
+
     function openTacosModal() {
         let tacosAgregados = [];
         let salsaSeleccionada = "roja";
@@ -470,14 +507,10 @@
                 <button class="btn-confirm" id="confirmTacosFinalBtn"><i class="fas fa-check"></i> Agregar ${tacosAgregados.length} taco(s) al carrito</button>
             `;
             
-            // Eventos para radio buttons de salsa global
             document.querySelectorAll('input[name="salsaGlobal"]').forEach(radio => {
-                radio.onchange = () => {
-                    if (radio.checked) salsaSeleccionada = radio.value;
-                };
+                radio.onchange = () => { if (radio.checked) salsaSeleccionada = radio.value; };
             });
             
-            // Eventos para agregar tacos
             document.querySelectorAll('.btn-agregar-taco').forEach(btn => {
                 btn.onclick = () => {
                     let tipo = btn.dataset.tipo;
@@ -502,7 +535,6 @@
                 };
             });
             
-            // Eventos para eliminar tacos
             document.querySelectorAll('.btn-eliminar-taco').forEach(btn => {
                 btn.onclick = () => {
                     let idx = parseInt(btn.dataset.idx);
@@ -583,22 +615,24 @@
     }
 
     const menuItems = [
-        { id:"milanesa_pollo", nombre:"Milanesa de Pollo", precio:90, desc:"Crujiente, pasta y vegetales al vapor", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGUoz38VVQ7qxu1veIYz7m9AhCr7o8d0HMcg&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
+        { id:"milanesa_pollo", nombre:"Milanesa de Pollo", precio:85, desc:"Crujiente, arroz y vegetales al vapor", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGUoz38VVQ7qxu1veIYz7m9AhCr7o8d0HMcg&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
         { id:"fajitas_res", nombre:"Fajitas de Res", precio:159, desc:"Con guacamole, frijoles, salsa y totopos", img:"https://jetextramar.com/wp-content/uploads/2021/07/empresa-de-alimentos-receta-de-guacamole.jpg", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
         { id:"papas_alhorno", nombre:"Papas al Horno", precio:89, desc:"Gratinadas con queso, con tortillas", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQggF8LfUl7U0eUUBnWe225Ilx0A-XISUFSJQ&s", categoria:"clasicos", custom:(item)=>openPapasRellenoModal(item) },
         { id:"pollo_oriental", nombre:"Pollo Tipo Oriental", precio:119, desc:"Con vegetales y pan con ajo", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgcDfLUdzL9XLazMpjU_ilAC6WcOvp96SJjA&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
         { id:"filete_pescado", nombre:"Filete de Pescado Empapelado con Camarón", precio:115, desc:"Pescado en papillote con camarones, gratinado con queso, morrón, cebolla y jalapeño, acompañado con arroz blanco y pan de ajo.", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUtmcNcgxHKt-omWj5nY83cSGAQW7E_CWbuw&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
         { id:"ceviche_habanero", nombre:"Ceviche de Camarón en Salsa de Habanero", precio:130, desc:"Ceviche fresco con tostadas, salsa de habanero al gusto", img:"https://pinaenlacocina.com/wp-content/uploads/2014/01/IMG_20180422_165323.jpg", categoria:"clasicos", custom:(item)=>openCevicheModal(item) },
-        { id:"brochetas", nombre:"Brochetas (3 piezas)", precio:89, desc:"3 brochetas con arroz blanco. Elige tu proteína", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX-Y-5XzmS9zSr3foKO-5gH-6Ik1XYenJI8Q&s", categoria:"clasicos", custom:(item)=>openBrochetasModal(item) },
+        { id:"brochetas", nombre:"Brochetas (3 piezas)", precio:99, desc:"3 brochetas con arroz blanco. Elige tu proteína", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX-Y-5XzmS9zSr3foKO-5gH-6Ik1XYenJI8Q&s", categoria:"clasicos", custom:(item)=>openBrochetasModal(item) },
         { id:"coctel_camaron", nombre:"Coctel de Camarón", precio:130, desc:"Camarones frescos con salsa cocktail, acompañado de galletas saladas", img:"https://pinaenlacocina.com/wp-content/uploads/2014/01/IMG_20180422_165323.jpg", categoria:"clasicos", custom:(item)=>openCoctelModal(item) },
         { id:"parrill_ada", nombre:"Parrillada", precio:189, desc:"Tocineta, chuleta y camarones acompañada de guacamole, frijoles y tortillas", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX-Y-5XzmS9zSr3foKO-5gH-6Ik1XYenJI8Q&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
         { id:"pechuga_pollo", nombre:"Pechuga a la Plancha", precio:110, desc:"Con arroz y vegetales al vapor", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF_z6BbHCC8XIJa7gK7tN_QfiGCWXFcKflSQ&s", categoria:"clasicos", custom:(item)=>openBBQModal(item) },
-        { id:"chilaquiles_verdes", nombre:"Chilaquiles Verdes", precio:85, desc:"Con frijoles y ensalada", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqJK74Z_PL6ZjUNbBF3U4GDbDjyPgJ_q7TlQ&s", categoria:"desayunos" },
-        { id:"chilaquiles_rojos", nombre:"Chilaquiles Rojos", precio:85, desc:"Con frijoles y ensalada", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ9we6bC6xfbHkBYhMjdd5GZPZnfDDRFW_NQ&s", categoria:"desayunos" },
+        { id:"enchiladas_suizas", nombre:"Enchiladas Suizas", precio:75, desc:"4 enchiladas rellenas de pollo y queso, gratinadas con crema y salsa verde, acompañadas de ensalada", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMcpJC4dhxcI361dSYcZ-HhcbMpDEv-c-Lzw&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
+        { id:"hamburguesa", nombre:"Hamburguesa", precio:89, desc:"Hamburguesa de res o pollo.", img:"https://www.lavizcaina.com.mx/cdn/shop/files/ham-rees2.jpg?v=1727371844&width=1445", categoria:"clasicos", custom:(item)=>openHamburguesaModal(item) },
+        { id:"chilaquiles_verdes", nombre:"Chilaquiles Verdes", precio:85, desc:"Con frijoles y ensalada. Elige proteína extra", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqJK74Z_PL6ZjUNbBF3U4GDbDjyPgJ_q7TlQ&s", categoria:"desayunos", custom:(item)=>openChilaquilesModal(item, true) },
+        { id:"chilaquiles_rojos", nombre:"Chilaquiles Rojos", precio:85, desc:"Con frijoles y ensalada. Elige proteína extra", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ9we6bC6xfbHkBYhMjdd5GZPZnfDDRFW_NQ&s", categoria:"desayunos", custom:(item)=>openChilaquilesModal(item, false) },
         { id:"burrito", nombre:"Burrito", precio:79, desc:"Acompañado de salsa", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRE09R7Pr2T6jP-VM6dNrqpKPdGlsUqWl4gA&s", categoria:"desayunos", custom:(item)=>openBurritoModal(item) },
         { id:"huevos_gusto", nombre:"Huevos al Gusto", precio:65, desc:"Elige tu estilo, acompañados con frijoles en chipotle, una rebanada de queso panela, salsa y tortillas.", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5XN3JJB8lJKrTDkLJEpiLd1IL_FlE0xEKSQ&s", categoria:"desayunos", custom:(item)=>openHuevosModal(item) },
         { id:"barras", nombre:"Barra (2 piezas)", precio:49, desc:"2 barras, elige tu estilo.", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6OC1t4Lb_fN47scE0TQHZYMI1-nU6vPcDmQ&s", categoria:"desayunos", custom:(item)=>openBarrasModal(item) },
-        { id:"menudo", nombre:"Menudo (Por Litro)", precio:120, desc:"Solo domingos, con tortillas", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXOT-6-I-mP9Vtvo7YrX_ZHuWE3uF2Gyu6mw&s", categoria:"desayunos" },
+        { id:"menudo", nombre:"Menudo SOLO LOS DOMINGOS (Por Litro)", precio:120, desc:"Solo domingos, con tortillas", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXOT-6-I-mP9Vtvo7YrX_ZHuWE3uF2Gyu6mw&s", categoria:"desayunos" },
         { id:"hot_cakes", nombre:"Hot Cakes con Fruta", precio:65, desc:"3 hot cakes con fruta", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVShdhlDtLaiIMkd20FXTV8TIfnuSxJwqkSw&s", categoria:"desayunos" },
         { id:"pasta_italiana", nombre:"Pasta Italiana", precio:95, desc:"Con pollo, tomate, espinaca y parmesano", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUQObwSU8zGs5lCcheGLubYY5tqG_W-YMGGQ&s", categoria:"pastas" },
         { id:"pasta_camarones_chipotle", nombre:"Pasta con Camarones en Crema de Chipotle", precio:119, desc:"Pasta con camarones, crema de chipotle y queso parmesano, acompañada con pan de ajo", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS73CQGupD7kKhlfSi_Pgim4SmeFE1eUCTt3g&s", categoria:"pastas" },
@@ -608,10 +642,9 @@
         { id:"cocacola", nombre:"Coca-Cola", precio:27, desc:"Lata 600 ml bien fría", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGTf9aUTctNTXvv5A3yXuhJ-JWA6DnrhJvew&s", categoria:"bebidas" },
         { id:"sprite", nombre:"Sprite", precio:25, desc:"Lata 600 ml, sabor cítrico", img:"https://calimaxmx.vtexassets.com/arquivos/ids/203614-800-450?v=638065795193000000&width=800&height=450&aspect=true", categoria:"bebidas" },
         { id:"fanta", nombre:"Fanta Naranja", precio:25, desc:"Lata 600 ml, refrescante", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-L2ud8xKYZiCqsrGoU8CU6uWjZlxfR0k-5w&s", categoria:"bebidas" },
-        { id:"agua_natural", nombre:"Agua Natural", precio:20, desc:"Botella 1 Litro", img:"https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=300&h=200&fit=crop", categoria:"bebidas" },
-        // NUEVAS BEBIDAS AGREGADAS
+        { id:"agua_natural", nombre:"Agua Natural", precio:20, desc:"Botella 1 Litro", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5j_b-aHldvvUD-_c8gCvrAInpsJWuRBbtvg&s", categoria:"bebidas" },
         { id:"agua_sabor", nombre:"Agua de sabor", precio:29, desc:"1 litro - Agua del día / sabor variable", img:"https://www.codigosanluis.com/wp-content/uploads/AGUAS.jpg", categoria:"bebidas" },
-        { id:"te_helado", nombre:"Té helado", precio:32, desc:"1/2 litro - Refrescante té preparado", img:"https://www.codigosanluis.com/wp-content/uploads/AGUAS.jpg", categoria:"bebidas" }
+        { id:"te_helado", nombre:"Té helado", precio:32, desc:"1/2 litro - Refrescante té preparado", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeGPTp7Z91TcTF0bIvm_xcRXANV8Hq79LVHQ&s", categoria:"bebidas" }
     ];
 
     function renderFullMenu(){
