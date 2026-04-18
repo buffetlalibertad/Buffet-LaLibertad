@@ -310,6 +310,7 @@
 
     function openWithPapasOption(baseItem, customConfig = null) {
         let hasExtra = false;
+        let descripcionBase = baseItem.desc || "";
         const modalContent = document.getElementById("customizeModalContent");
         let innerHtml = `<div class="modal-header"><h2>${baseItem.nombre}</h2><button class="close-modal" id="closeCustomModal">&times;</button></div>`;
         if (customConfig) { innerHtml += customConfig.html; innerHtml += `<div class="option-group" style="margin-top:16px;"><label class="option-label">¿Agregar papas extra?</label><div class="radio-group"><label><input type="radio" name="papas" value="no" checked> Sin papas</label><label><input type="radio" name="papas" value="si"> Papas extra (+$30)</label></div></div>`; }
@@ -318,14 +319,27 @@
         modalContent.innerHTML = innerHtml;
         document.getElementById("customizeModal").classList.add("active");
         document.getElementById("closeCustomModal").onclick = () => document.getElementById("customizeModal").classList.remove("active");
+        
         const radios = document.querySelectorAll('input[name="papas"]');
         const priceSpan = document.getElementById("pricePreview");
         let basePrice = baseItem.precio;
+        
         radios.forEach(r => r.onchange = () => { hasExtra = r.value === "si"; priceSpan.innerText = `Total: $${basePrice + (hasExtra ? 30 : 0)}`; });
+        
         document.getElementById("confirmBtn").onclick = () => {
             let finalPrice = basePrice + (hasExtra ? 30 : 0);
             let finalName = baseItem.nombre + (hasExtra ? " + Papas Extra" : "");
-            if (customConfig && customConfig.getCustomization) { const customResult = customConfig.getCustomization(); if (customResult && customResult.name) { finalName = customResult.name + (hasExtra ? " + Papas Extra" : ""); finalPrice = customResult.price + (hasExtra ? 30 : 0); } }
+            if (customConfig && customConfig.getCustomization) { 
+                const customResult = customConfig.getCustomization(); 
+                if (customResult && customResult.name) { 
+                    finalName = customResult.name + (hasExtra ? " + Papas Extra" : ""); 
+                    finalPrice = customResult.price + (hasExtra ? 30 : 0); 
+                } 
+            }
+            // Agregar descripción al nombre del producto
+            if (descripcionBase && !finalName.includes(descripcionBase.substring(0,30))) {
+                finalName = finalName + " - " + descripcionBase;
+            }
             addToCartCustom({ id: baseItem.id + "_" + Date.now(), nombre: finalName, precio: finalPrice, cantidad: 1 });
             document.getElementById("customizeModal").classList.remove("active");
         };
@@ -391,23 +405,25 @@
         });
     }
 
-    // Chilaquiles con proteína - PRECIOS CORREGIDOS
+    // Chilaquiles con proteína
     function openChilaquilesModal(baseItem, esVerde) {
         let selectedProteina = "ninguna";
         let proteinaMap = { arrachera: "Arrachera +$30", pollo_empanizado: "Pollo empanizado +$15", pollo_plancha: "Pollo a la plancha +$15" };
         let proteinaPrecio = { arrachera: 30, pollo_empanizado: 15, pollo_plancha: 15 };
         let nombreBase = esVerde ? "Chilaquiles Verdes" : "Chilaquiles Rojos";
+        let descBase = baseItem.desc || "Bien cargados, bañados en frijoles enchipotlados, gratinados con queso, crema, aguacate, cebolla y cilantro";
         
         openWithPapasOption(baseItem, {
             html: `<div class="option-group"><label class="option-label">Elige tu proteína (opcional)</label><div class="radio-group"><label><input type="radio" name="proteina" value="ninguna" checked> Sin proteína</label><label><input type="radio" name="proteina" value="arrachera"> Arrachera (+$30)</label><label><input type="radio" name="proteina" value="pollo_empanizado"> Pollo empanizado (+$15)</label><label><input type="radio" name="proteina" value="pollo_plancha"> Pollo a la plancha (+$15)</label></div></div>`,
             getCustomization: () => {
-                let precioFinal = 85;
+                let precioFinal = 95;
                 let nombreFinal = nombreBase;
                 if (selectedProteina !== "ninguna") {
                     precioFinal += proteinaPrecio[selectedProteina];
                     let proteinaNombre = proteinaMap[selectedProteina];
                     nombreFinal = `${nombreBase} con ${proteinaNombre}`;
                 }
+                nombreFinal = nombreFinal + " - " + descBase;
                 return { name: nombreFinal, price: precioFinal };
             },
             init: () => { 
@@ -422,7 +438,7 @@
         let proteinaMap = { res: "Res", milanesa: "Milanesa de Pollo", pollo_plancha: "Pollo a la plancha" };
         openWithPapasOption(baseItem, {
             html: `<div class="option-group"><label class="option-label">Elige tu proteína</label><div class="radio-group"><label><input type="radio" name="proteina" value="res" checked> Res</label><label><input type="radio" name="proteina" value="milanesa"> Milanesa de Pollo</label><label><input type="radio" name="proteina" value="pollo_plancha"> Pollo a la plancha</label></div></div>`,
-            getCustomization: () => ({ name: `Hamburguesa de ${proteinaMap[selectedProteina]}`, price: 89 }),
+            getCustomization: () => ({ name: `Hamburguesa de ${proteinaMap[selectedProteina]} - Hamburguesa con lechuga, tomate, cebolla, queso y papas a la francesa`, price: 89 }),
             init: () => { 
                 document.querySelectorAll('input[name="proteina"]').forEach(r => r.onchange = () => { selectedProteina = r.value; });
             }
@@ -580,7 +596,7 @@
         let sizePrices = { chico: 130, grande: 160 };
         openWithPapasOption(baseItem, {
             html: `<div class="option-group"><label class="option-label">Elige el tamaño</label><div class="radio-group"><label><input type="radio" name="size" value="chico" checked> Chico (1/2 Litro) - $130</label><label><input type="radio" name="size" value="grande"> Grande (1 Litro) - $160</label></div></div>`,
-            getCustomization: () => ({ name: `Ceviche de Camarón en Salsa de Habanero ${sizeMap[selectedSize]}`, price: sizePrices[selectedSize] }),
+            getCustomization: () => ({ name: `Ceviche de Camarón en Salsa de Habanero ${sizeMap[selectedSize]} - Ceviche fresco con tostadas, salsa de habanero al gusto`, price: sizePrices[selectedSize] }),
             init: () => { document.querySelectorAll('input[name="size"]').forEach(r => r.onchange = () => { selectedSize = r.value; }); }
         });
     }
@@ -591,7 +607,7 @@
         let sizePrices = { chico: 130, grande: 160 };
         openWithPapasOption(baseItem, {
             html: `<div class="option-group"><label class="option-label">Elige el tamaño</label><div class="radio-group"><label><input type="radio" name="size" value="chico" checked> Chico - $130 (con galletas saladas)</label><label><input type="radio" name="size" value="grande"> Grande - $160 (con galletas saladas)</label></div></div>`,
-            getCustomization: () => ({ name: `Coctel de Camarón ${sizeMap[selectedSize]} con Galletas Saladas`, price: sizePrices[selectedSize] }),
+            getCustomization: () => ({ name: `Coctel de Camarón ${sizeMap[selectedSize]} con Galletas Saladas - Camarones frescos con salsa cocktail`, price: sizePrices[selectedSize] }),
             init: () => { document.querySelectorAll('input[name="size"]').forEach(r => r.onchange = () => { selectedSize = r.value; }); }
         });
     }
@@ -611,7 +627,7 @@
         ingredients.forEach(ing => { const chip = document.createElement("div"); chip.className = "ingredient-chip"; chip.innerText = ing; chip.onclick = () => { if(chip.classList.contains("selected")){ chip.classList.remove("selected"); selectedIngredients = selectedIngredients.filter(i=>i!==ing); }else{ if(selectedIngredients.length>=6){ alert("Máximo 6 ingredientes"); return; } chip.classList.add("selected"); selectedIngredients.push(ing); } document.getElementById("ingredientCounter").innerText = `${selectedIngredients.length}/6 seleccionados`; }; grid.appendChild(chip); }); 
         const proteinSelect = document.getElementById("proteinSelect"); 
         proteinSelect.onchange = () => { if(proteinSelect.value){ selectedProtein = proteinSelect.value; proteinPrice = parseInt(proteinSelect.selectedOptions[0].dataset.price); }else{ selectedProtein = null; proteinPrice = 0; } updatePrice(); }; 
-        document.getElementById("confirmBtn").onclick = () => { if(selectedIngredients.length === 0){ alert("Selecciona al menos 1 ingrediente"); return; } const nombre = `Ensalada Personalizada (${selectedIngredients.join(", ")})${selectedProtein?` + ${selectedProtein}`:""}`; addToCartCustom({ id:"ensalada_"+Date.now(), nombre:nombre, precio:89+proteinPrice, cantidad:1 }); document.getElementById("customizeModal").classList.remove("active"); }; updatePrice(); 
+        document.getElementById("confirmBtn").onclick = () => { if(selectedIngredients.length === 0){ alert("Selecciona al menos 1 ingrediente"); return; } const nombre = `Ensalada Personalizada (${selectedIngredients.join(", ")})${selectedProtein?` + ${selectedProtein}`:""} - Elige hasta 6 ingredientes y proteína extra`; addToCartCustom({ id:"ensalada_"+Date.now(), nombre:nombre, precio:89+proteinPrice, cantidad:1 }); document.getElementById("customizeModal").classList.remove("active"); }; updatePrice(); 
     }
 
     const menuItems = [
@@ -656,7 +672,7 @@
             card.innerHTML=`<img class="dish-img" src="${item.img}" alt="${item.nombre}" loading="lazy" onerror="this.src='https://placehold.co/200x200/2c2c2c/white?text=Comida'"><div class="dish-info"><div class="dish-name">${item.nombre}</div><div class="dish-price">${displayPrice}</div><div class="dish-desc">${item.desc}</div><button class="btn-add" data-id="${item.id}"><i class="fas fa-cart-plus"></i> Agregar</button></div>`;
             const btn=card.querySelector(".btn-add");
             if(item.custom) btn.onclick=()=>item.custom(item);
-            else btn.onclick=()=>addToCartCustom({ id:item.id+"_"+Date.now(), nombre:item.nombre, precio:item.precio, cantidad:1 });
+            else btn.onclick=()=>addToCartCustom({ id:item.id+"_"+Date.now(), nombre:item.nombre + " - " + item.desc, precio:item.precio, cantidad:1 });
             if(item.categoria==="clasicos") grids.clasicos.appendChild(card);
             else if(item.categoria==="desayunos") grids.desayunos.appendChild(card);
             else if(item.categoria==="pastas") grids.pastas.appendChild(card);
