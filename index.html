@@ -336,7 +336,6 @@
                     finalPrice = customResult.price + (hasExtra ? 30 : 0); 
                 } 
             }
-            // Agregar descripción al nombre del producto
             if (descripcionBase && !finalName.includes(descripcionBase.substring(0,30))) {
                 finalName = finalName + " - " + descripcionBase;
             }
@@ -441,6 +440,19 @@
             getCustomization: () => ({ name: `Hamburguesa de ${proteinaMap[selectedProteina]} - Hamburguesa con lechuga, tomate, cebolla, queso y papas a la francesa`, price: 89 }),
             init: () => { 
                 document.querySelectorAll('input[name="proteina"]').forEach(r => r.onchange = () => { selectedProteina = r.value; });
+            }
+        });
+    }
+
+    // Pechuga Rellena con selección de crema
+    function openPechugaRellenaModal(baseItem) {
+        let selectedCrema = "elote";
+        let cremaMap = { elote: "Crema de Elote", chipotle: "Crema de Chipotle", espinaca: "Crema de Espinaca" };
+        openWithPapasOption(baseItem, {
+            html: `<div class="option-group"><label class="option-label">Elige el tipo de crema</label><div class="radio-group"><label><input type="radio" name="crema" value="elote" checked> Crema de Elote</label><label><input type="radio" name="crema" value="chipotle"> Crema de Chipotle</label><label><input type="radio" name="crema" value="espinaca"> Crema de Espinaca</label></div></div>`,
+            getCustomization: () => ({ name: `Pechuga Rellena (Rellena de jamón con queso) - ${cremaMap[selectedCrema]}`, price: baseItem.precio }),
+            init: () => { 
+                document.querySelectorAll('input[name="crema"]').forEach(r => r.onchange = () => { selectedCrema = r.value; });
             }
         });
     }
@@ -601,6 +613,17 @@
         });
     }
 
+    function openCevichePescadoModal(baseItem) {
+        let selectedSize = "chico";
+        let sizeMap = { chico: "Chico (1/2 Litro)", grande: "Grande (1 Litro)" };
+        let sizePrices = { chico: 110, grande: 140 };
+        openWithPapasOption(baseItem, {
+            html: `<div class="option-group"><label class="option-label">Elige el tamaño</label><div class="radio-group"><label><input type="radio" name="size" value="chico" checked> Chico (1/2 Litro) - $110</label><label><input type="radio" name="size" value="grande"> Grande (1 Litro) - $140</label></div></div>`,
+            getCustomization: () => ({ name: `Ceviche de Pescado ${sizeMap[selectedSize]} - Ceviche fresco con tostadas`, price: sizePrices[selectedSize] }),
+            init: () => { document.querySelectorAll('input[name="size"]').forEach(r => r.onchange = () => { selectedSize = r.value; }); }
+        });
+    }
+
     function openCoctelModal(baseItem) {
         let selectedSize = "chico";
         let sizeMap = { chico: "Chico", grande: "Grande" };
@@ -636,10 +659,12 @@
         { id:"papas_alhorno", nombre:"Papas al Horno", precio:89, desc:"Gratinadas con queso, con tortillas", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQggF8LfUl7U0eUUBnWe225Ilx0A-XISUFSJQ&s", categoria:"clasicos", custom:(item)=>openPapasRellenoModal(item) },
         { id:"pollo_oriental", nombre:"Pollo Tipo Oriental", precio:119, desc:"Con vegetales y pan con ajo", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgcDfLUdzL9XLazMpjU_ilAC6WcOvp96SJjA&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
         { id:"filete_pescado", nombre:"Filete de Pescado Empapelado con Camarón", precio:115, desc:"Pescado en papillote con camarones, gratinado con queso, morrón, cebolla y jalapeño, acompañado con arroz blanco y pan de ajo.", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUtmcNcgxHKt-omWj5nY83cSGAQW7E_CWbuw&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
+        { id:"alambre", nombre:"Alambre", precio:95, desc:"Carne de res con morrón, cebolla, tocino, gratinado con queso, acompañado de pico de gallo, frijoles, tortillas y salsa", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShFPPi5XDsPYvZ6jEl1uKXDOks5rpO7wckzQ&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
+        { id:"ceviche_pescado", nombre:"Ceviche de Pescado", precio:110, desc:"Ceviche fresco con tostadas", img:"https://pinaenlacocina.com/wp-content/uploads/2014/01/IMG_20180422_165323.jpg", categoria:"clasicos", custom:(item)=>openCevichePescadoModal(item) },
+        { id:"pechuga_rellena", nombre:"Pechuga Rellena", precio:110, desc:"Pechuga de pollo rellena de jamón con queso, acompañada de vegetales y puré de papa, (elige tu crema)", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdl_8uGkAZQICDdYTonv5K4Lu0ajMLMJi0nQ&s", categoria:"clasicos", custom:(item)=>openPechugaRellenaModal(item) },
         { id:"ceviche_habanero", nombre:"Ceviche de Camarón en Salsa de Habanero", precio:130, desc:"Ceviche fresco con tostadas, salsa de habanero al gusto", img:"https://pinaenlacocina.com/wp-content/uploads/2014/01/IMG_20180422_165323.jpg", categoria:"clasicos", custom:(item)=>openCevicheModal(item) },
         { id:"brochetas", nombre:"Brochetas (3 piezas)", precio:99, desc:"3 brochetas con arroz blanco. Elige tu proteína", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX-Y-5XzmS9zSr3foKO-5gH-6Ik1XYenJI8Q&s", categoria:"clasicos", custom:(item)=>openBrochetasModal(item) },
         { id:"coctel_camaron", nombre:"Coctel de Camarón", precio:130, desc:"Camarones frescos con salsa cocktail, acompañado de galletas saladas", img:"https://pinaenlacocina.com/wp-content/uploads/2014/01/IMG_20180422_165323.jpg", categoria:"clasicos", custom:(item)=>openCoctelModal(item) },
-        { id:"parrill_ada", nombre:"Parrillada", precio:189, desc:"Tocineta, chuleta y camarones acompañada de guacamole, frijoles y tortillas", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX-Y-5XzmS9zSr3foKO-5gH-6Ik1XYenJI8Q&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
         { id:"pechuga_pollo", nombre:"Pechuga a la Plancha", precio:110, desc:"Con arroz y vegetales al vapor", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF_z6BbHCC8XIJa7gK7tN_QfiGCWXFcKflSQ&s", categoria:"clasicos", custom:(item)=>openBBQModal(item) },
         { id:"enchiladas_suizas", nombre:"Enchiladas Suizas", precio:75, desc:"4 enchiladas rellenas de pollo y queso, gratinadas con crema y salsa verde, acompañadas de ensalada", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMcpJC4dhxcI361dSYcZ-HhcbMpDEv-c-Lzw&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
         { id:"hamburguesa", nombre:"Hamburguesa", precio:89, desc:"Hamburguesa de res o pollo.", img:"https://www.lavizcaina.com.mx/cdn/shop/files/ham-rees2.jpg?v=1727371844&width=1445", categoria:"clasicos", custom:(item)=>openHamburguesaModal(item) },
@@ -650,7 +675,6 @@
         { id:"barras", nombre:"Barra (2 piezas)", precio:49, desc:"2 barras, elige tu estilo.", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6OC1t4Lb_fN47scE0TQHZYMI1-nU6vPcDmQ&s", categoria:"desayunos", custom:(item)=>openBarrasModal(item) },
         { id:"menudo", nombre:"Menudo SOLO LOS DOMINGOS (Por Litro)", precio:120, desc:"Solo domingos, con tortillas", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXOT-6-I-mP9Vtvo7YrX_ZHuWE3uF2Gyu6mw&s", categoria:"desayunos" },
         { id:"hot_cakes", nombre:"Hot Cakes con Fruta", precio:65, desc:"3 hot cakes con fruta", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVShdhlDtLaiIMkd20FXTV8TIfnuSxJwqkSw&s", categoria:"desayunos" },
-        { id:"pasta_italiana", nombre:"Pasta Italiana", precio:95, desc:"Con pollo, tomate, espinaca y parmesano", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUQObwSU8zGs5lCcheGLubYY5tqG_W-YMGGQ&s", categoria:"pastas" },
         { id:"pasta_camarones_chipotle", nombre:"Pasta con Camarones en Crema de Chipotle", precio:119, desc:"Pasta con camarones, crema de chipotle y queso parmesano, acompañada con pan de ajo", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS73CQGupD7kKhlfSi_Pgim4SmeFE1eUCTt3g&s", categoria:"pastas" },
         { id:"tacos", nombre:"Tacos", precio:0, desc:"Elige tus tacos y complementos. Salsa única para todo el pedido (en bolsita)", img:"https://cdn.nutritionstudies.org/wp-content/uploads/2023/03/chipotle-mushroom-tacos-1024x683.jpg", categoria:"tacos", custom:(item)=>openTacosModal() },
         { id:"papas_fritas", nombre:"Papas Fritas", precio:50, desc:"Crujientes papas a la francesa", img:"https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=300&h=200&fit=crop", categoria:"otros" },
