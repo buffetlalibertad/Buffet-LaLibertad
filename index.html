@@ -404,6 +404,45 @@
         });
     }
 
+    // Tiras de Pollo Frito con salsas
+    function openTirasPolloModal(baseItem) {
+        let selectedSalsa = "naturales";
+        let salsaMap = { naturales: "Naturales", bbq: "Salsa BBQ", buffalo: "Salsa Búfalo" };
+        openWithPapasOption(baseItem, {
+            html: `<div class="option-group"><label class="option-label">Elige tu salsa</label><div class="radio-group"><label><input type="radio" name="salsa" value="naturales" checked> Naturales</label><label><input type="radio" name="salsa" value="bbq"> Salsa BBQ</label><label><input type="radio" name="salsa" value="buffalo"> Salsa Búfalo</label></div></div>`,
+            getCustomization: () => ({ name: `Tiras de Pechuga de Pollo Frito - ${salsaMap[selectedSalsa]} - Acompañadas de puré de papa y ensalada tipo Kentucky`, price: baseItem.precio }),
+            init: () => { 
+                document.querySelectorAll('input[name="salsa"]').forEach(r => r.onchange = () => { selectedSalsa = r.value; });
+            }
+        });
+    }
+
+    // Coctel de Frutas Tropical
+    function openCoctelTropicalModal(baseItem) {
+        let selectedTopping = "sola";
+        let toppingMap = { sola: "Sola", miel: "Con Miel", coco: "Con Coco Rallado", yogurt: "Con Yogurt con Granola" };
+        openWithPapasOption(baseItem, {
+            html: `<div class="option-group"><label class="option-label">Elige tu topping</label><div class="radio-group"><label><input type="radio" name="topping" value="sola" checked> Sola</label><label><input type="radio" name="topping" value="miel"> Con Miel</label><label><input type="radio" name="topping" value="coco"> Con Coco Rallado</label><label><input type="radio" name="topping" value="yogurt"> Con Yogurt con Granola</label></div></div>`,
+            getCustomization: () => ({ name: `Coctel de Frutas Tropical (Melón, papaya, manzana, fresas) - ${toppingMap[selectedTopping]}`, price: baseItem.precio }),
+            init: () => { 
+                document.querySelectorAll('input[name="topping"]').forEach(r => r.onchange = () => { selectedTopping = r.value; });
+            }
+        });
+    }
+
+    // Coctel de Frutas Fresco
+    function openCoctelFrescoModal(baseItem) {
+        let selectedSazon = "sola";
+        let sazonMap = { sola: "Sola", chamoy: "Con Chamoy", tajin: "Con Chile Tajín", molido: "Con Chile Molido" };
+        openWithPapasOption(baseItem, {
+            html: `<div class="option-group"><label class="option-label">Elige tu sazón</label><div class="radio-group"><label><input type="radio" name="sazon" value="sola" checked> Sola</label><label><input type="radio" name="sazon" value="chamoy"> Con Chamoy</label><label><input type="radio" name="sazon" value="tajin"> Con Chile Tajín</label><label><input type="radio" name="sazon" value="molido"> Con Chile Molido</label></div></div>`,
+            getCustomization: () => ({ name: `Coctel de Frutas Fresco (Sandía, piña, jícama, pepino) - ${sazonMap[selectedSazon]}`, price: baseItem.precio }),
+            init: () => { 
+                document.querySelectorAll('input[name="sazon"]').forEach(r => r.onchange = () => { selectedSazon = r.value; });
+            }
+        });
+    }
+
     // Chilaquiles con proteína
     function openChilaquilesModal(baseItem, esVerde) {
         let selectedProteina = "ninguna";
@@ -613,6 +652,17 @@
         });
     }
 
+    function openCevicheBlancoPescadoModal(baseItem) {
+        let selectedSize = "chico";
+        let sizeMap = { chico: "Chico (1/2 Litro)", grande: "Grande (1 Litro)" };
+        let sizePrices = { chico: 110, grande: 140 };
+        openWithPapasOption(baseItem, {
+            html: `<div class="option-group"><label class="option-label">Elige el tamaño</label><div class="radio-group"><label><input type="radio" name="size" value="chico" checked> Chico (1/2 Litro) - $110</label><label><input type="radio" name="size" value="grande"> Grande (1 Litro) - $140</label></div></div>`,
+            getCustomization: () => ({ name: `Ceviche Blanco de Pescado ${sizeMap[selectedSize]} - Acompañado con tostadas`, price: sizePrices[selectedSize] }),
+            init: () => { document.querySelectorAll('input[name="size"]').forEach(r => r.onchange = () => { selectedSize = r.value; }); }
+        });
+    }
+
     function openCevichePescadoModal(baseItem) {
         let selectedSize = "chico";
         let sizeMap = { chico: "Chico (1/2 Litro)", grande: "Grande (1 Litro)" };
@@ -659,9 +709,10 @@
         { id:"papas_alhorno", nombre:"Papas al Horno", precio:89, desc:"Gratinadas con queso, con tortillas", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQggF8LfUl7U0eUUBnWe225Ilx0A-XISUFSJQ&s", categoria:"clasicos", custom:(item)=>openPapasRellenoModal(item) },
         { id:"pollo_oriental", nombre:"Pollo Tipo Oriental", precio:119, desc:"Con vegetales y pan con ajo", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgcDfLUdzL9XLazMpjU_ilAC6WcOvp96SJjA&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
         { id:"filete_pescado", nombre:"Filete de Pescado Empapelado con Camarón", precio:115, desc:"Pescado en papillote con camarones, gratinado con queso, morrón, cebolla y jalapeño, acompañado con arroz blanco y pan de ajo.", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUtmcNcgxHKt-omWj5nY83cSGAQW7E_CWbuw&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
-        { id:"alambre", nombre:"Alambre", precio:95, desc:"Carne de res con morrón, cebolla, tocino, gratinado con queso, acompañado de pico de gallo, frijoles, tortillas y salsa", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShFPPi5XDsPYvZ6jEl1uKXDOks5rpO7wckzQ&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
-        { id:"ceviche_pescado", nombre:"Ceviche de Pescado", precio:110, desc:"Ceviche fresco con tostadas", img:"https://pinaenlacocina.com/wp-content/uploads/2014/01/IMG_20180422_165323.jpg", categoria:"clasicos", custom:(item)=>openCevichePescadoModal(item) },
-        { id:"pechuga_rellena", nombre:"Pechuga Rellena", precio:110, desc:"Pechuga de pollo rellena de jamón con queso, acompañada de vegetales y puré de papa, (elige tu crema)", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdl_8uGkAZQICDdYTonv5K4Lu0ajMLMJi0nQ&s", categoria:"clasicos", custom:(item)=>openPechugaRellenaModal(item) },
+        { id:"alambre", nombre:"Alambre", precio:159, desc:"Carne de res con morrón, cebolla, tocino, gratinado con queso, acompañado de puré de papa, frijoles, tortillas y salsa", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX-Y-5XzmS9zSr3foKO-5gH-6Ik1XYenJI8Q&s", categoria:"clasicos", custom:(item)=>openExtraPapasModal(item) },
+        { id:"ceviche_blanco_pescado", nombre:"Ceviche Blanco de Pescado", precio:110, desc:"Acompañado con tostadas", img:"https://pinaenlacocina.com/wp-content/uploads/2014/01/IMG_20180422_165323.jpg", categoria:"clasicos", custom:(item)=>openCevicheBlancoPescadoModal(item) },
+        { id:"tiras_pollo", nombre:"Tiras de Pechuga de Pollo Frito", precio:129, desc:"Acompañadas de puré de papa y ensalada tipo Kentucky", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF_z6BbHCC8XIJa7gK7tN_QfiGCWXFcKflSQ&s", categoria:"clasicos", custom:(item)=>openTirasPolloModal(item) },
+        { id:"pechuga_rellena", nombre:"Pechuga Rellena", precio:135, desc:"Pechuga de pollo rellena de jamón con queso, acompañada de crema (elige tu crema)", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF_z6BbHCC8XIJa7gK7tN_QfiGCWXFcKflSQ&s", categoria:"clasicos", custom:(item)=>openPechugaRellenaModal(item) },
         { id:"ceviche_habanero", nombre:"Ceviche de Camarón en Salsa de Habanero", precio:130, desc:"Ceviche fresco con tostadas, salsa de habanero al gusto", img:"https://pinaenlacocina.com/wp-content/uploads/2014/01/IMG_20180422_165323.jpg", categoria:"clasicos", custom:(item)=>openCevicheModal(item) },
         { id:"brochetas", nombre:"Brochetas (3 piezas)", precio:99, desc:"3 brochetas con arroz blanco. Elige tu proteína", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX-Y-5XzmS9zSr3foKO-5gH-6Ik1XYenJI8Q&s", categoria:"clasicos", custom:(item)=>openBrochetasModal(item) },
         { id:"coctel_camaron", nombre:"Coctel de Camarón", precio:130, desc:"Camarones frescos con salsa cocktail, acompañado de galletas saladas", img:"https://pinaenlacocina.com/wp-content/uploads/2014/01/IMG_20180422_165323.jpg", categoria:"clasicos", custom:(item)=>openCoctelModal(item) },
@@ -672,6 +723,8 @@
         { id:"chilaquiles_rojos", nombre:"Chilaquiles Especiales (Rojos)", precio:95, desc:"Bien cargados, Elige tu Proteina, Bañados en Frijoles Enchipotlados, Gratinados con Queso, Crema, Con aguacate, Cebolla y Cilantro", img:"https://scontent.fqro3-1.fna.fbcdn.net/v/t39.30808-6/656452293_1607518970350983_3048921546084326662_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeGtonwa6_p0fHKuZY6U0eLV8rCGy9Ia0pfysIbL0hrSl7HNN4q1G_2hLPNytizJxOWyguRy3Wdz_sAiF4NxdZ7N&_nc_ohc=Lo1ePRLPcbAQ7kNvwGTaeG4&_nc_oc=AdrHQx7TAkDWeiUfhO8Oh12em3DaCv_25qYoefQIPJI1hv1EgBiKPrRSvE1fHk0cvo0&_nc_zt=23&_nc_ht=scontent.fqro3-1.fna&_nc_gid=S2qaT9uESHSorQ1DJM4KCg&_nc_ss=7a3a8&oh=00_Af27rCrFtMXXo96OwsCwteFNaLnsQCHsWvZguPCFku5xfA&oe=69E83912", categoria:"desayunos", custom:(item)=>openChilaquilesModal(item, false) },
         { id:"burrito", nombre:"Burrito", precio:79, desc:"Acompañado de salsa", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRE09R7Pr2T6jP-VM6dNrqpKPdGlsUqWl4gA&s", categoria:"desayunos", custom:(item)=>openBurritoModal(item) },
         { id:"huevos_gusto", nombre:"Huevos al Gusto", precio:65, desc:"Elige tu estilo, acompañados con frijoles en chipotle, una rebanada de queso panela, salsa y tortillas.", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5XN3JJB8lJKrTDkLJEpiLd1IL_FlE0xEKSQ&s", categoria:"desayunos", custom:(item)=>openHuevosModal(item) },
+        { id:"coctel_tropical", nombre:"Coctel de Frutas Tropical", precio:65, desc:"Melón, papaya, manzana, fresas - Elige topping", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVShdhlDtLaiIMkd20FXTV8TIfnuSxJwqkSw&s", categoria:"desayunos", custom:(item)=>openCoctelTropicalModal(item) },
+        { id:"coctel_fresco", nombre:"Coctel de Frutas Fresco", precio:55, desc:"Sandía, piña, jícama, pepino - Elige sazón", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVShdhlDtLaiIMkd20FXTV8TIfnuSxJwqkSw&s", categoria:"desayunos", custom:(item)=>openCoctelFrescoModal(item) },
         { id:"barras", nombre:"Barra (2 piezas)", precio:49, desc:"2 barras, elige tu estilo.", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6OC1t4Lb_fN47scE0TQHZYMI1-nU6vPcDmQ&s", categoria:"desayunos", custom:(item)=>openBarrasModal(item) },
         { id:"menudo", nombre:"Menudo SOLO LOS DOMINGOS (Por Litro)", precio:120, desc:"Solo domingos, con tortillas", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXOT-6-I-mP9Vtvo7YrX_ZHuWE3uF2Gyu6mw&s", categoria:"desayunos" },
         { id:"hot_cakes", nombre:"Hot Cakes con Fruta", precio:65, desc:"3 hot cakes con fruta", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVShdhlDtLaiIMkd20FXTV8TIfnuSxJwqkSw&s", categoria:"desayunos" },
