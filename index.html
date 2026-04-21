@@ -549,7 +549,7 @@
         let proteinaMap = { res: "Res", milanesa: "Milanesa de Pollo", pollo_plancha: "Pollo a la plancha" };
         openWithPapasOption(baseItem, {
             html: `<div class="option-group"><label class="option-label">Elige tu proteína</label><div class="radio-group"><label><input type="radio" name="proteina" value="res" checked> Res</label><label><input type="radio" name="proteina" value="milanesa"> Milanesa de Pollo</label><label><input type="radio" name="proteina" value="pollo_plancha"> Pollo a la plancha</label></div></div>`,
-            getCustomization: () => ({ name: `Hamburguesa de ${proteinaMap[selectedProteina]} - Hamburguesa con lechuga, tomate, cebolla, queso y papas a la francesa`, price: 79 }),
+            getCustomization: () => ({ name: `Hamburguesa de ${proteinaMap[selectedProteina]} - Hamburguesa, carne cacera con lechuga, tomate, cebolla, y queso.`, price: 79 }),
             init: () => { 
                 document.querySelectorAll('input[name="proteina"]').forEach(r => r.onchange = () => { selectedProteina = r.value; });
             }
