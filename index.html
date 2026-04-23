@@ -448,13 +448,28 @@
         });
     }
 
-    // Quesadillas con opciones (con papas)
+    // QUESADILLAS CORREGIDAS
     function openQuesadillaModal(baseItem) {
         let selectedTipo = "bistec";
-        let tipoMap = { bistec: "Bistec", arrachera: "Arrachera (+$10)", chorizo: "Chorizo", campechana: "Campechana" };
-        let tipoPrecio = { bistec: 45, arrachera: 55, chorizo: 45, campechana: 50 };
+        let tipoMap = { 
+            bistec: "Bistec", 
+            arrachera: "Arrachera", 
+            chorizo: "Chorizo", 
+            campechana: "Campechana" 
+        };
+        // Precios según lo solicitado:
+        // Base 75 + Bistec (+10) = 85
+        // Arrachera (+20) = 95
+        // Chorizo (+10) = 85
+        // Campechana (+15) = 90
+        let tipoPrecio = { 
+            bistec: 85,    // 75 + 10
+            arrachera: 95, // 75 + 20
+            chorizo: 85,   // 75 + 10
+            campechana: 90 // 75 + 15
+        };
         openWithPapasOption(baseItem, {
-            html: `<div class="option-group"><label class="option-label">Elige tu relleno</label><div class="radio-group"><label><input type="radio" name="tipo" value="bistec" checked> Bistec ($45)</label><label><input type="radio" name="tipo" value="arrachera"> Arrachera (+$10) ($55)</label><label><input type="radio" name="tipo" value="chorizo"> Chorizo ($45)</label><label><input type="radio" name="tipo" value="campechana"> Campechana ($50)</label></div></div>`,
+            html: `<div class="option-group"><label class="option-label">Elige tu relleno</label><div class="radio-group"><label><input type="radio" name="tipo" value="bistec" checked> Bistec (+$10) ($85)</label><label><input type="radio" name="tipo" value="arrachera"> Arrachera (+$20) ($95)</label><label><input type="radio" name="tipo" value="chorizo"> Chorizo (+$10) ($85)</label><label><input type="radio" name="tipo" value="campechana"> Campechana (+$15) ($90)</label></div></div>`,
             getCustomization: () => ({ name: `Quesadilla de ${tipoMap[selectedTipo]}`, price: tipoPrecio[selectedTipo] }),
             init: () => { 
                 document.querySelectorAll('input[name="tipo"]').forEach(r => r.onchange = () => { selectedTipo = r.value; });
